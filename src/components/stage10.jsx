@@ -1,0 +1,223 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import '../css/stage1.css'
+
+const Stage10 = () => {
+  const navigate = useNavigate();
+  const { currentUser, saveUserProgress, getUserProgress } = useAuth();
+  
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [gameCompleted, setGameCompleted] = useState(false);
+  const [answerSubmitted, setAnswerSubmitted] = useState(false);
+  const [finalScore, setFinalScore] = useState(0);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const LEVEL_NUMBER = 10;
+  const PREVIOUS_LEVEL = 9;
+  const MIN_PASSING_SCORE = 80;
+  const POINTS_PER_QUESTION = 20;
+
+  // คำถาม Bootstrap (ใช้ข้อสอบชั่วคราว - เปลี่ยนทีหลังได้)
+  const questions = [
+    { question: "Bootstrap Grid System แบ่งหน้าจอออกเป็นกี่คอลัมน์", options: ["6", "10", "12", "16"], correct: 2 },
+    { question: "Class ใดใช้สำหรับสร้างปุ่มสีน้ำเงินใน Bootstrap", options: ["btn-blue", "btn-primary", "btn-main", "btn-default"], correct: 1 },
+    { question: "Class ใดใช้สำหรับสร้าง Container แบบเต็มความกว้าง", options: ["container", "container-fluid", "container-full", "container-wide"], correct: 1 },
+    { question: "Breakpoint ใดใช้สำหรับหน้าจอขนาดเล็ก (Small)", options: ["xs", "sm", "md", "lg"], correct: 1 },
+    { question: "Class ใดใช้สำหรับซ่อน element บนหน้าจอขนาดเล็ก", options: ["d-none", "d-sm-none", "hidden-sm", "invisible"], correct: 0 }
+  ];
+
+  useEffect(() => {
+    const checkUnlock = async () => {
+      if (!currentUser) { navigate('/login'); return; }
+      try {
+        const progress = await getUserProgress();
+        const completedLevels = progress.completedLevels || [];
+        const levelScores = progress.levelScores || {};
+        const previousPassed = completedLevels.includes(PREVIOUS_LEVEL) && (levelScores[PREVIOUS_LEVEL] || 0) >= MIN_PASSING_SCORE;
+        setIsUnlocked(previousPassed);
+      } catch (error) { console.error('Error:', error); }
+      finally { setLoading(false); }
+    };
+    checkUnlock();
+  }, [currentUser, getUserProgress, navigate]);
+
+  const saveScore = async (quizScore) => {
+    if (!currentUser) return;
+    try {
+      const progress = await getUserProgress();
+      let completedLevels = progress.completedLevels || [];
+      let levelScores = progress.levelScores || {};
+
+      const previousScore = levelScores[LEVEL_NUMBER] || 0;
+      const wasAlreadyPassed = completedLevels.includes(LEVEL_NUMBER);
+      const isPassed = quizScore >= MIN_PASSING_SCORE;
+
+      if (quizScore > previousScore) levelScores[LEVEL_NUMBER] = quizScore;
+      if (isPassed && !wasAlreadyPassed) {
+        completedLevels = [...completedLevels, LEVEL_NUMBER];
+      }
+
+      let totalScore = 0;
+      Object.values(levelScores).forEach(s => { totalScore += s; });
+
+      await saveUserProgress(completedLevels, totalScore, levelScores);
+      window.dispatchEvent(new CustomEvent('scoreUpdated', {
+        detail: { score: totalScore, progress: completedLevels, levelScores }
+      }));
+    } catch (error) { console.error('Error saving score:', error); }
+  };
+
+  const handleAnswerSelect = (answerIndex) => {
+    if (!answerSubmitted) setSelectedAnswer(answerIndex);
+  };
+
+  const submitAnswer = () => {
+    if (selectedAnswer === null) return;
+    
+    setAnswerSubmitted(true);
+    setShowResult(true);
+    
+    const isCorrect = selectedAnswer === questions[currentQuestion].correct;
+    let newScore = score;
+    if (isCorrect) {
+      newScore = score + POINTS_PER_QUESTION;
+      setScore(newScore);
+    }
+    
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+        setSelectedAnswer(null);
+        setShowResult(false);
+        setAnswerSubmitted(false);
+      } else {
+        setFinalScore(newScore);
+        setGameCompleted(true);
+        saveScore(newScore);
+      }
+    }, 2000);
+  };
+
+  const resetGame = () => {
+    setCurrentQuestion(0);
+    setScore(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setGameCompleted(false);
+    setAnswerSubmitted(false);
+    setFinalScore(0);
+  };
+
+  const getAnswerClass = (index) => {
+    if (!showResult) return selectedAnswer === index ? 'stage1-selected' : '';
+    if (index === questions[currentQuestion].correct) return 'stage1-correct';
+    if (index === selectedAnswer && selectedAnswer !== questions[currentQuestion].correct) return 'stage1-incorrect';
+    return '';
+  };
+
+  if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}><h2>กำลังโหลด...</h2></div>;
+
+  if (!isUnlocked) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px', maxWidth: '600px', margin: '50px auto', background: '#ffebee', borderRadius: '15px', border: '2px solid #f44336' }}>
+        <div style={{ fontSize: '4em', marginBottom: '20px' }}>🔒</div>
+        <h2 style={{ color: '#f44336' }}>ด่านนี้ยังล็อคอยู่</h2>
+        <p>ต้องผ่านด่าน {PREVIOUS_LEVEL} ด้วยคะแนน 80% ขึ้นไปก่อน</p>
+        <button onClick={() => navigate('/')} style={{ padding: '12px 30px', background: '#667eea', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', marginTop: '20px' }}>🏠 กลับหน้าเลือกด่าน</button>
+      </div>
+    );
+  }
+
+  const isPassed = finalScore >= MIN_PASSING_SCORE;
+  const correctAnswers = finalScore / POINTS_PER_QUESTION;
+
+  return (
+    <div className="stage1-quiz-container">
+      <div className="stage1-quiz-header">
+        <h1 className="stage1-quiz-title">🅱️ Quiz Challenge - Stage 10 (Bootstrap)</h1>
+        <div className="stage1-quiz-info">
+          <div className="stage1-info-item">
+            <span className="stage1-info-label">Score</span>
+            <span className="stage1-info-value">{score}/100</span>
+          </div>
+          <div className="stage1-info-item">
+            <span className="stage1-info-label">No.</span>
+            <span className="stage1-info-value">{currentQuestion + 1}/{questions.length}</span>
+          </div>
+          <div className="stage1-info-item">
+            <span className="stage1-info-label">Points/Q</span>
+            <span className="stage1-info-value">{POINTS_PER_QUESTION}</span>
+          </div>
+        </div>
+        <div style={{ background: '#fff3e0', padding: '8px 15px', borderRadius: '8px', marginTop: '10px', fontSize: '0.9em', color: '#e65100' }}>
+          ⚠️ ต้องได้ {MIN_PASSING_SCORE}/100 คะแนนขึ้นไป (80%) จึงจะผ่านด่านและปลดล็อคด่านถัดไป
+        </div>
+        <div className="stage1-progress-bar">
+          <div className="stage1-progress-fill" style={{ width: `${((currentQuestion + (gameCompleted ? 1 : 0)) / questions.length) * 100}%` }}></div>
+        </div>
+      </div>
+
+      <div className="stage1-quiz-content">
+        {!gameCompleted ? (
+          <div className="stage1-question-container">
+            <div className="stage1-question-number">Question {currentQuestion + 1}</div>
+            <div className="stage1-question-text">{questions[currentQuestion].question}</div>
+            <div className="stage1-options-container">
+              {questions[currentQuestion].options.map((option, index) => (
+                <button key={index} className={`stage1-option-button ${getAnswerClass(index)}`} onClick={() => handleAnswerSelect(index)} disabled={answerSubmitted}>
+                  {String.fromCharCode(65 + index)}. {option}
+                </button>
+              ))}
+            </div>
+            {showResult && (
+              <div className={`stage1-result-indicator ${selectedAnswer === questions[currentQuestion].correct ? 'stage1-result-correct' : 'stage1-result-incorrect'}`}>
+                {selectedAnswer === questions[currentQuestion].correct ? `✅ ถูกต้อง! +${POINTS_PER_QUESTION} คะแนน` : `❌ ผิด! คำตอบที่ถูกคือ ${String.fromCharCode(65 + questions[currentQuestion].correct)}`}
+              </div>
+            )}
+            {!answerSubmitted && (
+              <button className="stage1-submit-button" onClick={submitAnswer} disabled={selectedAnswer === null}>ยืนยันคำตอบ</button>
+            )}
+          </div>
+        ) : (
+          <div className="stage1-completion-message">
+            {isPassed ? (
+              <>
+                <div style={{ color: '#4caf50', fontSize: '2.5em', marginBottom: '10px' }}>🎉 ผ่านด่าน!</div>
+                <div style={{ background: 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)', color: 'white', padding: '20px 30px', borderRadius: '15px', marginBottom: '25px', fontSize: '1.3em', fontWeight: 'bold' }}>
+                  ✅ คะแนนผ่านเกณฑ์ 80% - ด่านถัดไปปลดล็อคแล้ว!
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ color: '#f44336', fontSize: '2.5em', marginBottom: '10px' }}>😢 ไม่ผ่านด่าน</div>
+                <div style={{ background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)', color: 'white', padding: '20px 30px', borderRadius: '15px', marginBottom: '25px', fontSize: '1.3em', fontWeight: 'bold' }}>
+                  ❌ ต้องได้ {MIN_PASSING_SCORE}/100 ขึ้นไป
+                </div>
+              </>
+            )}
+            <div style={{ fontSize: '2em', marginBottom: '15px' }}>คะแนน Quiz: {finalScore}/100</div>
+            <div style={{ fontSize: '1.3em', color: '#555', marginBottom: '25px', padding: '15px', background: '#f5f5f5', borderRadius: '10px' }}>
+              ตอบถูก <strong style={{ color: isPassed ? '#4caf50' : '#f44336' }}>{correctAnswers}</strong> จาก {questions.length} ข้อ
+              {finalScore === 100 && <div style={{ color: '#4caf50', fontWeight: 'bold', marginTop: '15px' }}>🏆 คะแนนเต็ม!</div>}
+            </div>
+            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button className="stage1-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}>
+                 {isPassed ? 'Play Again' : 'Play Again'}
+              </button>
+              <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>
+              Return to the stage selection page
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Stage10;

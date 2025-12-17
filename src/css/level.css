@@ -1,0 +1,540 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: #0a0f1c;
+    overflow-x: hidden;
+}
+
+.game-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0f1c 0%, #1a2332 50%, #0d1421 100%);
+    position: relative;
+    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 100px;
+    z-index: 1;
+    isolation: isolate;
+    /* สร้าง stacking context แยก */
+}
+
+/* Animated background particles */
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #00bfff, transparent),
+        radial-gradient(2px 2px at 40px 70px, #1e90ff, transparent),
+        radial-gradient(1px 1px at 90px 40px, #87ceeb, transparent),
+        radial-gradient(1px 1px at 130px 80px, #4169e1, transparent),
+        radial-gradient(2px 2px at 160px 30px, #0080ff, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: sparkle 20s linear infinite;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+@keyframes sparkle {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #00bfff, #1e90ff, #4169e1, #0080ff);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(0, 191, 255, 0.5);
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #87ceeb;
+    opacity: 0.8;
+    letter-spacing: 2px;
+}
+
+.levels-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.level-connection {
+    width: 4px;
+    height: 60px;
+    background: linear-gradient(to bottom, #00bfff, #1e90ff);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-connection::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #ffffff, transparent);
+    animation: connectionPulse 2s linear infinite;
+}
+
+@keyframes connectionPulse {
+    0% {
+        top: -100%;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+.level-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.level-button {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Unlocked level (Blue theme) */
+.level-button.unlocked {
+    background: linear-gradient(135deg, #00bfff, #1e90ff, #4169e1);
+    box-shadow:
+        0 0 30px rgba(0, 191, 255, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.level-button.unlocked::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.level-button.unlocked:hover {
+    transform: scale(1.15) translateY(-5px);
+    box-shadow:
+        0 0 50px rgba(0, 191, 255, 0.6),
+        0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Completed level */
+.level-button.completed {
+    background: linear-gradient(135deg, #00ff88, #00cc6a, #009954);
+    box-shadow:
+        0 0 30px rgba(0, 255, 136, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.level-button.completed:hover {
+    transform: scale(1.15) translateY(-5px);
+    box-shadow:
+        0 0 50px rgba(0, 255, 136, 0.6),
+        0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Final level (Red theme) */
+.level-button.final {
+    background: linear-gradient(135deg, #ff3030, #ff0000, #cc0000);
+    box-shadow:
+        0 0 30px rgba(255, 48, 48, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    animation: finalLevelPulse 2s ease-in-out infinite;
+}
+
+@keyframes finalLevelPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 30px rgba(255, 48, 48, 0.4),
+            0 8px 25px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    50% {
+        box-shadow:
+            0 0 50px rgba(255, 48, 48, 0.8),
+            0 8px 25px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+}
+
+.level-button.final:hover {
+    transform: scale(1.15) translateY(-5px);
+    box-shadow:
+        0 0 60px rgba(255, 48, 48, 0.8),
+        0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Locked level (Gray) */
+.level-button.locked {
+    background: linear-gradient(135deg, #4a5568, #2d3748, #1a202c);
+    color: #718096;
+    cursor: not-allowed;
+    box-shadow:
+        0 0 15px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.level-button.locked:hover {
+    transform: none;
+}
+
+.level-number {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.level-points {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.level-label {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 191, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #00bfff;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.level-item:hover .level-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.locked .level-label {
+    background: rgba(74, 85, 104, 0.1);
+    border-color: rgba(74, 85, 104, 0.3);
+    color: #718096;
+}
+
+.stats-bar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 191, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-weight: 700;
+    color: #00bfff;
+    z-index: 100;
+    /* ลด z-index ให้ต่ำกว่า navbar */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.star-icon {
+    font-size: 2rem;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: starTwinkle 2s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+.lock-icon {
+    font-size: 2rem;
+    color: #718096;
+    opacity: 0.6;
+}
+
+.trophy-icon {
+    font-size: 2rem;
+    color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    animation: trophyGlow 3s ease-in-out infinite;
+}
+
+@keyframes trophyGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        transform: scale(1);
+    }
+
+    50% {
+        text-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+        transform: scale(1.05);
+    }
+}
+
+.flame-icon {
+    font-size: 2rem;
+    color: #ff4444;
+    text-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+    animation: flameFlicker 1.5s ease-in-out infinite;
+}
+
+@keyframes flameFlicker {
+
+    0%,
+    100% {
+        text-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        text-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
+        transform: scale(1.02) rotate(1deg);
+    }
+
+    75% {
+        text-shadow: 0 0 25px rgba(255, 68, 68, 0.9);
+        transform: scale(1.05) rotate(-1deg);
+    }
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 15px;
+        padding-bottom: 120px;
+        z-index: 1;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .level-button {
+        width: 90px;
+        height: 90px;
+        font-size: 0.9rem;
+    }
+
+    .level-number {
+        font-size: 1rem;
+    }
+
+    .level-points {
+        font-size: 0.7rem;
+    }
+
+    .star-icon,
+    .lock-icon {
+        font-size: 1.5rem;
+    }
+
+    .stats-bar {
+        position: static;
+        margin: 20px auto;
+        text-align: center;
+        width: fit-content;
+        z-index: 1;
+    }
+
+    .level-label {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+        top: -40px;
+    }
+
+    .level-connection {
+        height: 40px;
+    }
+
+    /* ปรับ info box บน mobile */
+    .game-container>div>div:first-child {
+        padding: 15px 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .game-container>div>div:first-child p:first-child {
+        font-size: 0.95em !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 10px;
+        padding-bottom: 100px;
+        z-index: 1;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+    }
+
+    .level-button {
+        width: 75px;
+        height: 75px;
+        font-size: 0.8rem;
+    }
+
+    .level-number {
+        font-size: 0.85rem;
+    }
+
+    .level-points {
+        font-size: 0.6rem;
+    }
+
+    .star-icon,
+    .lock-icon {
+        font-size: 1.2rem;
+    }
+
+    .level-connection {
+        height: 30px;
+    }
+
+    .level-label {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+        top: -35px;
+    }
+
+    /* ปรับ info box บน small mobile */
+    .game-container>div>div:first-child {
+        padding: 12px 15px !important;
+        border-radius: 10px !important;
+    }
+
+    .game-container>div>div:first-child p:first-child {
+        font-size: 0.85em !important;
+        line-height: 1.4 !important;
+    }
+
+    /* ปรับ badge ไม่ผ่าน */
+    .level-button>div[style*="position: absolute"] {
+        font-size: 0.55em !important;
+        padding: 1px 5px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .level-button {
+        width: 68px;
+        height: 68px;
+    }
+
+    .level-number {
+        font-size: 0.75rem;
+    }
+
+    .star-icon,
+    .lock-icon {
+        font-size: 1rem;
+    }
+}
