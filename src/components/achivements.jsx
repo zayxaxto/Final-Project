@@ -113,7 +113,7 @@ const Achievements = () => {
       try {
         const progress = await getUserProgress();
         const userAchievementsData = progress.achievements || {};
-        
+
         // ตรวจสอบความคืบหน้าของแต่ละภารกิจ
         const updatedAchievements = achievementList.map(achievement => {
           const userAchievement = userAchievementsData[achievement.id] || {
@@ -123,7 +123,7 @@ const Achievements = () => {
           };
 
           const progressData = calculateProgress(achievement, progress);
-          
+
           return {
             ...achievement,
             ...userAchievement,
@@ -154,7 +154,7 @@ const Achievements = () => {
 
     switch (requirement.type) {
       case 'complete_levels':
-        const completedRequiredLevels = requirement.levels.filter(level => 
+        const completedRequiredLevels = requirement.levels.filter(level =>
           completedLevels.includes(level)
         );
         return {
@@ -186,7 +186,7 @@ const Achievements = () => {
         };
 
       case 'complete_finals':
-        const completedFinals = requirement.levels.filter(level => 
+        const completedFinals = requirement.levels.filter(level =>
           completedLevels.includes(level)
         );
         return {
@@ -238,7 +238,7 @@ const Achievements = () => {
       );
 
       // อัปเดต state
-      setAchievements(prev => prev.map(a => 
+      setAchievements(prev => prev.map(a =>
         a.id === achievementId ? { ...a, claimed: true } : a
       ));
 
@@ -246,7 +246,7 @@ const Achievements = () => {
 
       // ส่งอีเวนต์อัปเดตคะแนน
       window.dispatchEvent(new CustomEvent('scoreUpdated', {
-        detail: { 
+        detail: {
           score: newTotalScore,
           progress: progress.completedLevels || [],
           achievementClaimed: achievement.title,
@@ -286,15 +286,33 @@ const Achievements = () => {
     <div className="achievements-container">
       {/* Header Section */}
       <div className="achievements-header">
-        <h1 className="achievements-title">🏆 Achievement</h1>
+        <h1 className="achievements-title">
+          <span className="title-icon">🏆</span>
+          Hall of Achievements
+        </h1>
+        <p className="achievements-subtitle">Complete missions to earn rewards and badges</p>
+
         <div className="achievements-stats">
           <div className="stat-card">
-            <span className="stat-number">{stats.completed}</span>
-            <span className="stat-label">Unlock</span>
+            <div className="stat-icon unlock">🔓</div>
+            <div className="stat-info">
+              <span className="stat-number">{stats.completed}</span>
+              <span className="stat-label">Unlocked</span>
+            </div>
           </div>
           <div className="stat-card">
-            <span className="stat-number">{stats.claimed}</span>
-            <span className="stat-label">Received</span>
+            <div className="stat-icon received">🎁</div>
+            <div className="stat-info">
+              <span className="stat-number">{stats.claimed}</span>
+              <span className="stat-label">Claimed</span>
+            </div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon points">💎</div>
+            <div className="stat-info">
+              <span className="stat-number">{stats.totalPoints}</span>
+              <span className="stat-label">Total Points</span>
+            </div>
           </div>
         </div>
       </div>
@@ -302,7 +320,7 @@ const Achievements = () => {
       {/* Achievements Grid - แถบยาว */}
       <div className="achievements-grid">
         {achievements.map((achievement) => (
-          <div 
+          <div
             key={achievement.id}
             className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'} ${achievement.claimed ? 'claimed' : ''}`}
             style={{ '--achievement-color': achievement.color }}
@@ -311,7 +329,7 @@ const Achievements = () => {
             <div className="achievement-icon">
               {achievement.icon}
             </div>
-            
+
             {/* Content */}
             <div className="achievement-content">
               <div className="achievement-header">
@@ -323,13 +341,13 @@ const Achievements = () => {
                   +{achievement.points} Points
                 </div>
               </div>
-              
+
               <div className="achievement-progress">
                 <div className="progress-container">
                   <div className="progress-bar">
-                    <div 
+                    <div
                       className="progress-fill"
-                      style={{ 
+                      style={{
                         width: `${(achievement.progress / achievement.maxProgress) * 100}%`,
                         background: `linear-gradient(135deg, ${achievement.color}, ${achievement.color}dd)`
                       }}
@@ -349,7 +367,7 @@ const Achievements = () => {
                   Received
                 </div>
               ) : achievement.unlocked ? (
-                <button 
+                <button
                   className="claim-button"
                   onClick={() => claimAchievement(achievement.id)}
                   disabled={claimingId === achievement.id}
@@ -381,7 +399,7 @@ const Achievements = () => {
         <h2>Summary of progress</h2>
         <div className="summary-progress">
           <div className="summary-bar">
-            <div 
+            <div
               className="summary-fill"
               style={{ width: `${(stats.completed / stats.total) * 100}%` }}
             ></div>
