@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 const SCORE_PER_QUESTION = 75;
 
 // URL วิดีโอ YouTube (แก้เป็น URL ที่ต้องการ)
-const YOUTUBE_URL = 'https://www.youtube.com/watch?v=BhZj7RHbl8Q';
+const YOUTUBE_URL = 'https://www.youtube.com/watch?v=-jzu5YH6OMQ&t=1s';
 
 // ข้อมูลคำถามแบบทดสอบ
 const quizData = [

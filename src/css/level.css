@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -7,423 +8,357 @@
 }
 
 body {
-    font-family: 'Orbitron', monospace;
-    background: #0a0f1c;
+    font-family: 'Outfit', sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
     overflow-x: hidden;
+    /* Grid Pattern applied globally */
+    background-image:
+        linear-gradient(#e2e8f0 1px, transparent 1px),
+        linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
+/* --- Container & Layout --- */
 .game-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #0a0f1c 0%, #1a2332 50%, #0d1421 100%);
+    background: transparent !important;
     position: relative;
     padding: 20px;
-    padding-top: 20px;
-    padding-bottom: 100px;
     z-index: 1;
     isolation: isolate;
-    /* สร้าง stacking context แยก */
 }
 
-/* Animated background particles */
-.game-container::before {
+.content-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Floating Blobs */
+.game-container::before,
+.game-container::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:
-        radial-gradient(2px 2px at 20px 30px, #00bfff, transparent),
-        radial-gradient(2px 2px at 40px 70px, #1e90ff, transparent),
-        radial-gradient(1px 1px at 90px 40px, #87ceeb, transparent),
-        radial-gradient(1px 1px at 130px 80px, #4169e1, transparent),
-        radial-gradient(2px 2px at 160px 30px, #0080ff, transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: sparkle 20s linear infinite;
-    opacity: 0.3;
-    z-index: 0;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: floatBlob 20s infinite alternate;
 }
 
-@keyframes sparkle {
-    from {
-        transform: translateY(0px);
+.game-container::before {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #cbd5e1 0%, transparent 70%);
+    top: -100px;
+    left: -100px;
+}
+
+.game-container::after {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #e2e8f0 0%, transparent 70%);
+    bottom: -100px;
+    right: -100px;
+    animation-delay: -5s;
+}
+
+@keyframes floatBlob {
+    0% {
+        transform: translate(0, 0);
     }
 
-    to {
-        transform: translateY(-100px);
+    100% {
+        transform: translate(30px, 30px);
     }
 }
 
+/* --- Requirement Banner (Pill Style) --- */
+.requirement-banner {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    padding: 12px 30px;
+    margin: 0 auto 50px;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.requirement-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.banner-icon {
+    font-size: 1.2rem;
+}
+
+.requirement-banner p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* --- Headers --- */
 .header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     position: relative;
     z-index: 2;
 }
 
 .title {
-    font-size: 3.5rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 3rem;
     font-weight: 900;
-    background: linear-gradient(45deg, #00bfff, #1e90ff, #4169e1, #0080ff);
-    background-size: 400% 400%;
+    background: linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 3s ease-in-out infinite;
-    text-shadow: 0 0 30px rgba(0, 191, 255, 0.5);
+    text-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
     margin-bottom: 10px;
-    letter-spacing: 3px;
-}
-
-@keyframes gradientShift {
-
-    0%,
-    100% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    color: #87ceeb;
-    opacity: 0.8;
     letter-spacing: 2px;
 }
 
-.levels-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
+.subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    font-weight: 500;
 }
 
+/* --- Levels Grid --- */
+.levels-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Ensure items align top if needed, but centering is main */
+    gap: 30px;
+    flex-wrap: wrap;
+    /* Allow wrapping */
+    position: relative;
+    z-index: 2;
+    padding-bottom: 40px;
+}
+
+/* --- Connection Lines --- */
+/* Horizontal connections for row layout */
 .level-connection {
-    width: 4px;
-    height: 60px;
-    background: linear-gradient(to bottom, #00bfff, #1e90ff);
+    width: 60px;
+    /* Horizontal connector */
+    height: 4px;
+    background: #e2e8f0;
     border-radius: 2px;
     position: relative;
     overflow: hidden;
+    align-self: center;
+    /* Center distinct from items */
+    margin-top: 10px;
+    /* Adjust based on button size */
 }
 
+/* Vertical Pulse */
 .level-connection::before {
     content: '';
     position: absolute;
-    top: -100%;
-    left: 0;
+    top: 0;
+    left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, transparent, #ffffff, transparent);
-    animation: connectionPulse 2s linear infinite;
+    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    animation: connectionPulseHorizontal 2s linear infinite;
 }
 
-@keyframes connectionPulse {
+@keyframes connectionPulseHorizontal {
     0% {
-        top: -100%;
+        left: -100%;
     }
 
     100% {
-        top: 100%;
+        left: 100%;
     }
 }
 
+/* --- Level Item --- */
 .level-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: relative;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
 }
 
+/* --- Level Button (The Stage) --- */
 .level-button {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
-    border: none;
+    /* Circle */
+    background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s ease;
     text-decoration: none;
-    color: white;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-/* Unlocked level (Blue theme) */
-.level-button.unlocked {
-    background: linear-gradient(135deg, #00bfff, #1e90ff, #4169e1);
+    /* Premium Look */
+    border: 6px solid #f8fafc;
+    /* Simulates a gap/ring */
     box-shadow:
-        0 0 30px rgba(0, 191, 255, 0.4),
-        0 8px 25px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 10px 25px -5px rgba(0, 0, 0, 0.1),
+        0 8px 10px -6px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
-.level-button.unlocked::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    animation: shimmer 3s linear infinite;
-}
-
-@keyframes shimmer {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+/* States */
+.level-button.unlocked {
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
 }
 
 .level-button.unlocked:hover {
-    transform: scale(1.15) translateY(-5px);
-    box-shadow:
-        0 0 50px rgba(0, 191, 255, 0.6),
-        0 15px 35px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px) scale(1.05);
+    border-color: #eff6ff;
+    box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.25);
 }
 
-/* Completed level */
 .level-button.completed {
-    background: linear-gradient(135deg, #00ff88, #00cc6a, #009954);
-    box-shadow:
-        0 0 30px rgba(0, 255, 136, 0.4),
-        0 8px 25px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: linear-gradient(145deg, #ffffff, #f0fdf4);
 }
 
 .level-button.completed:hover {
-    transform: scale(1.15) translateY(-5px);
-    box-shadow:
-        0 0 50px rgba(0, 255, 136, 0.6),
-        0 15px 35px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px) scale(1.05);
+    border-color: #f0fdf4;
+    box-shadow: 0 20px 40px -10px rgba(34, 197, 94, 0.25);
 }
 
-/* Final level (Red theme) */
 .level-button.final {
-    background: linear-gradient(135deg, #ff3030, #ff0000, #cc0000);
-    box-shadow:
-        0 0 30px rgba(255, 48, 48, 0.4),
-        0 8px 25px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    animation: finalLevelPulse 2s ease-in-out infinite;
-}
-
-@keyframes finalLevelPulse {
-
-    0%,
-    100% {
-        box-shadow:
-            0 0 30px rgba(255, 48, 48, 0.4),
-            0 8px 25px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
-
-    50% {
-        box-shadow:
-            0 0 50px rgba(255, 48, 48, 0.8),
-            0 8px 25px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
+    background: linear-gradient(145deg, #ffffff, #fef2f2);
 }
 
 .level-button.final:hover {
-    transform: scale(1.15) translateY(-5px);
-    box-shadow:
-        0 0 60px rgba(255, 48, 48, 0.8),
-        0 15px 35px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px) scale(1.05);
+    border-color: #fef2f2;
+    box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.25);
 }
 
-/* Locked level (Gray) */
 .level-button.locked {
-    background: linear-gradient(135deg, #4a5568, #2d3748, #1a202c);
-    color: #718096;
+    background: #f1f5f9;
     cursor: not-allowed;
-    box-shadow:
-        0 0 15px rgba(0, 0, 0, 0.3),
-        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-color: #f8fafc;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    opacity: 0.8;
 }
 
 .level-button.locked:hover {
     transform: none;
 }
 
-.level-number {
-    font-size: 1.4rem;
-    font-weight: 900;
-    margin-bottom: 5px;
-}
-
-.level-points {
-    font-size: 0.8rem;
-    opacity: 0.9;
-    font-weight: 400;
-}
-
-.level-label {
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 191, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    color: #00bfff;
-    font-weight: 700;
-    white-space: nowrap;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.level-item:hover .level-label {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-10px);
-}
-
-.locked .level-label {
-    background: rgba(74, 85, 104, 0.1);
-    border-color: rgba(74, 85, 104, 0.3);
-    color: #718096;
-}
-
-.stats-bar {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0, 191, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    border-radius: 15px;
-    padding: 15px 20px;
-    font-weight: 700;
-    color: #00bfff;
-    z-index: 100;
-    /* ลด z-index ให้ต่ำกว่า navbar */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.star-icon {
-    font-size: 2rem;
-    color: #ffd700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    animation: starTwinkle 2s ease-in-out infinite;
-}
-
-@keyframes starTwinkle {
-
-    0%,
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 0.7;
-        transform: scale(1.1);
-    }
-}
-
+/* --- Content inside Button --- */
+.star-icon,
 .lock-icon {
     font-size: 2rem;
-    color: #718096;
-    opacity: 0.6;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
 }
 
-.trophy-icon {
-    font-size: 2rem;
-    color: #ffd700;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    animation: trophyGlow 3s ease-in-out infinite;
+.level-button.unlocked .star-icon {
+    color: #3b82f6;
 }
 
-@keyframes trophyGlow {
-
-    0%,
-    100% {
-        text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-        transform: scale(1);
-    }
-
-    50% {
-        text-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
-        transform: scale(1.05);
-    }
+.level-button.completed .star-icon {
+    color: #10b981;
 }
 
-.flame-icon {
-    font-size: 2rem;
-    color: #ff4444;
-    text-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
-    animation: flameFlicker 1.5s ease-in-out infinite;
+.level-button.final .star-icon {
+    color: #ef4444;
 }
 
-@keyframes flameFlicker {
+.level-button.locked .lock-icon {
+    color: #cbd5e1;
+}
 
-    0%,
-    100% {
-        text-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
-        transform: scale(1) rotate(0deg);
-    }
+.level-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 6px;
+}
 
-    25% {
-        text-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
-        transform: scale(1.02) rotate(1deg);
-    }
+.level-button.locked .level-number {
+    color: #94a3b8;
+}
 
-    75% {
-        text-shadow: 0 0 25px rgba(255, 68, 68, 0.9);
-        transform: scale(1.05) rotate(-1deg);
-    }
+/* --- Score Badge (New "100/100" style) --- */
+.level-score {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    min-width: 80px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.level-score.pass {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.level-score.fail {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.level-score.locked {
+    background: #e2e8f0;
+    color: #94a3b8;
+}
+
+/* Remove "Stage X" label tooltip since it's redundant now */
+.level-label {
+    display: none;
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
 
 @media (max-width: 768px) {
-    .game-container {
-        padding: 15px;
-        padding-bottom: 120px;
-        z-index: 1;
+    .content-wrapper {
+        padding: 10px;
     }
 
     .title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+
+    .requirement-banner {
+        padding: 10px 20px;
+        margin-bottom: 30px;
+    }
+
+    .requirement-banner p {
+        font-size: 0.85rem;
     }
 
     .level-button {
-        width: 90px;
-        height: 90px;
-        font-size: 0.9rem;
-    }
-
-    .level-number {
-        font-size: 1rem;
-    }
-
-    .level-points {
-        font-size: 0.7rem;
+        width: 100px;
+        height: 100px;
+        border-width: 4px;
     }
 
     .star-icon,
@@ -431,110 +366,60 @@ body {
         font-size: 1.5rem;
     }
 
-    .stats-bar {
-        position: static;
-        margin: 20px auto;
-        text-align: center;
-        width: fit-content;
-        z-index: 1;
+    .level-number {
+        font-size: 0.8rem;
     }
 
-    .level-label {
-        font-size: 0.75rem;
-        padding: 6px 12px;
-        top: -40px;
+    .level-score {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        min-width: 60px;
     }
 
     .level-connection {
-        height: 40px;
+        width: 30px;
     }
 
-    /* ปรับ info box บน mobile */
-    .game-container>div>div:first-child {
-        padding: 15px 20px !important;
-        margin-bottom: 20px !important;
-    }
-
-    .game-container>div>div:first-child p:first-child {
-        font-size: 0.95em !important;
+    /* Switch to grid/column if needed for very small screens, 
+       but flexible wrap usually works fine */
+    .levels-grid {
+        gap: 15px;
     }
 }
 
 @media (max-width: 480px) {
-    .game-container {
-        padding: 10px;
-        padding-bottom: 100px;
-        z-index: 1;
-    }
-
-    .title {
-        font-size: 1.6rem;
-        letter-spacing: 1px;
-    }
-
-    .level-button {
-        width: 75px;
-        height: 75px;
-        font-size: 0.8rem;
-    }
-
-    .level-number {
-        font-size: 0.85rem;
-    }
-
-    .level-points {
-        font-size: 0.6rem;
-    }
-
-    .star-icon,
-    .lock-icon {
-        font-size: 1.2rem;
+    .levels-grid {
+        flex-direction: column;
+        /* Stack vertically on phones */
+        align-items: center;
     }
 
     .level-connection {
-        height: 30px;
+        width: 4px;
+        height: 40px;
+        /* Vertical connector again */
+        margin: 0;
     }
 
-    .level-label {
-        font-size: 0.65rem;
-        padding: 4px 10px;
-        top: -35px;
-    }
-
-    /* ปรับ info box บน small mobile */
-    .game-container>div>div:first-child {
-        padding: 12px 15px !important;
-        border-radius: 10px !important;
-    }
-
-    .game-container>div>div:first-child p:first-child {
-        font-size: 0.85em !important;
-        line-height: 1.4 !important;
-    }
-
-    /* ปรับ badge ไม่ผ่าน */
-    .level-button>div[style*="position: absolute"] {
-        font-size: 0.55em !important;
-        padding: 1px 5px !important;
-    }
-}
-
-@media (max-width: 375px) {
-    .title {
-        font-size: 1.4rem;
+    .level-connection::before {
+        top: -100%;
+        left: 0;
+        background: linear-gradient(to bottom, transparent, #3b82f6, transparent);
+        animation: connectionPulseVertical 2s linear infinite;
     }
 
     .level-button {
-        width: 68px;
-        height: 68px;
+        width: 110px;
+        height: 110px;
+    }
+}
+
+@keyframes connectionPulseVertical {
+    0% {
+        top: -100%;
     }
 
-    .level-number {
-        font-size: 0.75rem;
-    }
-
-    .star-icon,
-    .lock-icon {
-        font-size: 1rem;
+    100% {
+        top: 100%;
     }
 }

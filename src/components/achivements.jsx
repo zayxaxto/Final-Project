@@ -265,7 +265,48 @@ const Achievements = () => {
     }
   };
 
-  // คำนวณสถิติรวม
+  // สร้างเอฟเฟกต์ Confetti
+  const createConfetti = (x, y) => {
+    const particleCount = 30;
+    const colors = ['#3b82f6', '#ec4899', '#f59e0b', '#10b981'];
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('confetti-particle');
+      document.body.appendChild(particle);
+
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = 2 + Math.random() * 4;
+      const tx = Math.cos(angle) * velocity * 50;
+      const ty = Math.sin(angle) * velocity * 50;
+
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      Object.assign(particle.style, {
+        width: '8px',
+        height: '8px',
+        background: color,
+        position: 'fixed',
+        left: `${x}px`,
+        top: `${y}px`,
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        zIndex: '9999',
+      });
+
+      const animation = particle.animate([
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+      ], {
+        duration: 800 + Math.random() * 400,
+        easing: 'cubic-bezier(0, .9, .57, 1)',
+        fill: 'forwards'
+      });
+
+      animation.onfinish = () => particle.remove();
+    }
+  };
+
   const stats = {
     total: achievements.length,
     completed: achievements.filter(a => a.unlocked).length,
@@ -319,11 +360,15 @@ const Achievements = () => {
 
       {/* Achievements Grid - แถบยาว */}
       <div className="achievements-grid">
-        {achievements.map((achievement) => (
+        {achievements.map((achievement, index) => (
           <div
             key={achievement.id}
             className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'} ${achievement.claimed ? 'claimed' : ''}`}
-            style={{ '--achievement-color': achievement.color }}
+            style={{
+              '--achievement-color': achievement.color,
+              animation: `slideInUp 0.6s ease-out forwards ${index * 0.1}s`,
+              opacity: 0 // Start invisible for animation
+            }}
           >
             {/* Icon */}
             <div className="achievement-icon">
@@ -348,8 +393,7 @@ const Achievements = () => {
                     <div
                       className="progress-fill"
                       style={{
-                        width: `${(achievement.progress / achievement.maxProgress) * 100}%`,
-                        background: `linear-gradient(135deg, ${achievement.color}, ${achievement.color}dd)`
+                        width: `${(achievement.progress / achievement.maxProgress) * 100}%`
                       }}
                     ></div>
                   </div>
@@ -364,29 +408,32 @@ const Achievements = () => {
             <div className="achievement-action">
               {achievement.claimed ? (
                 <div className="claimed-badge">
-                  Received
+                  <span>✓</span> Received
                 </div>
               ) : achievement.unlocked ? (
                 <button
                   className="claim-button"
-                  onClick={() => claimAchievement(achievement.id)}
+                  onClick={(e) => {
+                    createConfetti(e.clientX, e.clientY);
+                    claimAchievement(achievement.id);
+                  }}
                   disabled={claimingId === achievement.id}
                 >
                   {claimingId === achievement.id ? (
-                    <div className="claim-loading">
+                    <>
                       <div className="spinner"></div>
-                      กำลังรับ...
-                    </div>
+                      Processing...
+                    </>
                   ) : (
                     <>
-                      <span className="claim-icon"></span>
-                      Get rewards
+                      <span>🎁</span>
+                      Get Reward
                     </>
                   )}
                 </button>
               ) : (
                 <div className="locked-badge">
-                  🔒 lock
+                  🔒 Locked
                 </div>
               )}
             </div>

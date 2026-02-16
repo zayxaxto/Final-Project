@@ -110,41 +110,39 @@ const GameLevels = () => {
 
     return (
         <div className="game-container">
-            <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-                <div style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', padding: '20px 30px', borderRadius: '12px', marginBottom: '30px', textAlign: 'center', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-                    <p style={{ margin: 0, fontSize: '1.2em', fontWeight: '600' }}>⚠️ ต้องได้คะแนน {MIN_PASSING_SCORE}/100 ขึ้นไป (80%) จึงจะผ่านด่านและปลดล็อกด่านถัดไป</p>
-                    <p style={{ margin: '10px 0 0 0', fontSize: '0.95em', opacity: 0.9 }}></p>
+            <div className="content-wrapper">
+                <div className="requirement-banner">
+                    <div className="banner-icon">⚠️</div>
+                    <p>ต้องได้คะแนน {MIN_PASSING_SCORE}/100 ขึ้นไป (80%) จึงจะผ่านด่าน</p>
                 </div>
 
                 {levelGroups.map((group, groupIndex) => (
-                    <div key={groupIndex} style={{ marginBottom: '60px' }}>
-                        <div className="header" style={{ marginBottom: '30px' }}><h1 className="title">{group.title}</h1></div>
-                        <div className="levels-grid" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                    <div key={groupIndex} className="level-group">
+                        <div className="header"><h1 className="title">{group.title}</h1></div>
+                        <div className="levels-grid">
                             {group.levels.map((level, index) => {
                                 const status = getLevelStatus(level.number);
                                 const unlocked = isLevelUnlocked(level.number);
-                                const completed = isLevelCompleted(level.number);
-                                const hasAttempted = levelScores[level.number] !== undefined;
-                                const levelScore = levelScores[level.number] || 0;
+                                const score = levelScores[level.number];
+                                const passed = score >= MIN_PASSING_SCORE;
+                                const hasScore = score !== undefined;
 
                                 return (
                                     <React.Fragment key={level.number}>
                                         <div className={`level-item ${!unlocked ? 'locked' : ''}`}>
-                                            <div className="level-label">{level.name}</div>
                                             {unlocked ? (
                                                 <Link to={level.path} className={`level-button ${status}`}>
                                                     <div className="star-icon">{getLevelIcon(level.number)}</div>
                                                     <div className="level-number">Stage {level.number}</div>
-                                                    <div className="level-points" style={{ color: getScoreColor(level.number) }}>{getScoreDisplay(level.number)}</div>
-                                                    {completed && <div style={{ position: 'absolute', top: '5px', right: '5px', background: '#4caf50', color: 'white', fontSize: '0.7em', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}></div>}
-                                                    {hasAttempted && !completed && <div style={{ position: 'absolute', top: '5px', right: '5px', background: '#f44336', color: 'white', fontSize: '0.65em', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>ไม่ผ่าน ({levelScore}%)</div>}
+                                                    <div className={`level-score ${passed ? 'pass' : (hasScore ? 'fail' : '')}`}>
+                                                        {hasScore ? `${score}/100` : 'เริ่มเลย'}
+                                                    </div>
                                                 </Link>
                                             ) : (
                                                 <div className={`level-button ${status}`}>
-                                                    <div className="lock-icon">{getLevelIcon(level.number)}</div>
+                                                    <div className="lock-icon">🔒</div>
                                                     <div className="level-number">Stage {level.number}</div>
-                                                    <div className="level-points">🔒 ล็อค</div>
-                                                    <div style={{ position: 'absolute', bottom: '5px', left: '50%', transform: 'translateX(-50%)', fontSize: '0.65em', color: '#999', whiteSpace: 'nowrap' }}></div>
+                                                    <div className="level-score locked">ล็อค</div>
                                                 </div>
                                             )}
                                         </div>

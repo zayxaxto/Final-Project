@@ -6,7 +6,7 @@ import '../css/stage2.css'
 const Stage2 = () => {
   const navigate = useNavigate();
   const { currentUser, saveUserProgress, getUserProgress } = useAuth();
-  
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -61,9 +61,9 @@ const Stage2 = () => {
         completedLevels = [...completedLevels, LEVEL_NUMBER];
       }
 
-      // คำนวณ totalScore = ผลรวมคะแนน Quiz ทุกด่าน
-      let totalScore = 0;
-      Object.values(levelScores).forEach(s => { totalScore += s; });
+      // คำนวณ totalScore ใหม่โดยใช้ผลต่าง
+      const scoreDiff = (levelScores[LEVEL_NUMBER] || 0) - previousScore;
+      const totalScore = (progress.totalScore || 0) + scoreDiff;
 
       await saveUserProgress(completedLevels, totalScore, levelScores);
       window.dispatchEvent(new CustomEvent('scoreUpdated', {
@@ -78,11 +78,11 @@ const Stage2 = () => {
     if (selectedAnswer === null) return;
     setAnswerSubmitted(true);
     setShowResult(true);
-    
+
     const isCorrect = selectedAnswer === questions[currentQuestion].correct;
     let newScore = score;
     if (isCorrect) { newScore = score + POINTS_PER_QUESTION; setScore(newScore); }
-    
+
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);

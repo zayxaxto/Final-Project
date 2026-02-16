@@ -6,7 +6,7 @@ import '../css/stage1.css'
 const Stage1 = () => {
   const navigate = useNavigate();
   const { currentUser, saveUserProgress, getUserProgress } = useAuth();
-  
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -50,18 +50,17 @@ const Stage1 = () => {
         completedLevels = [...completedLevels, LEVEL_NUMBER];
       }
 
-      // คำนวณ totalScore = ผลรวมคะแนน Quiz ทุกด่าน
-      let totalScore = 0;
-      Object.values(levelScores).forEach(s => {
-        totalScore += s;
-      });
+      // คำนวณ totalScore = คะแนนเดิม + ส่วนต่างคะแนนของด่านนี้
+      // วิธีนี้จะช่วยรักษาคะแนนจาก Video Quiz และ Achievements ไว้
+      const scoreDiff = (levelScores[LEVEL_NUMBER] || 0) - previousScore;
+      const totalScore = (progress.totalScore || 0) + scoreDiff;
 
       // บันทึกลง Firebase
       await saveUserProgress(completedLevels, totalScore, levelScores);
 
       // ส่ง event อัพเดท navbar
       window.dispatchEvent(new CustomEvent('scoreUpdated', {
-        detail: { 
+        detail: {
           score: totalScore,  // ผลรวมคะแนน Quiz ทุกด่าน
           progress: completedLevels,
           levelScores: levelScores
@@ -80,17 +79,17 @@ const Stage1 = () => {
 
   const submitAnswer = () => {
     if (selectedAnswer === null) return;
-    
+
     setAnswerSubmitted(true);
     setShowResult(true);
-    
+
     const isCorrect = selectedAnswer === questions[currentQuestion].correct;
     let newScore = score;
     if (isCorrect) {
       newScore = score + POINTS_PER_QUESTION;
       setScore(newScore);
     }
-    
+
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
@@ -196,7 +195,7 @@ const Stage1 = () => {
             </div>
             <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button className="stage1-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}>
-                 {isPassed ? 'Play Again' : 'Play Again'}
+                {isPassed ? 'Play Again' : 'Play Again'}
               </button>
               <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>
                 Return to the stage selection page

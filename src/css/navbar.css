@@ -42,8 +42,12 @@
 
 /* Space for content below navbar */
 .App {
-  padding-top: 70px;
   position: relative;
+}
+
+body.has-navbar .App {
+  padding-top: 70px;
+  background: transparent !important;
 }
 
 /* ==================== LOGO ==================== */
@@ -329,7 +333,7 @@
     height: 65px;
   }
 
-  .App {
+  body.has-navbar .App {
     padding-top: 65px;
   }
 
@@ -388,7 +392,7 @@
     z-index: 10000 !important;
   }
 
-  .App {
+  body.has-navbar .App {
     padding-top: 60px;
   }
 
@@ -584,7 +588,7 @@
     height: 55px;
   }
 
-  .App {
+  body.has-navbar .App {
     padding-top: 55px;
   }
 

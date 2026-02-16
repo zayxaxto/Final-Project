@@ -6,7 +6,7 @@ import '../css/stage2.css'
 const Stage11 = () => {
   const navigate = useNavigate();
   const { currentUser, saveUserProgress, getUserProgress } = useAuth();
-  
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -62,8 +62,8 @@ const Stage11 = () => {
         completedLevels = [...completedLevels, LEVEL_NUMBER];
       }
 
-      let totalScore = 0;
-      Object.values(levelScores).forEach(s => { totalScore += s; });
+      const scoreDiff = (levelScores[LEVEL_NUMBER] || 0) - previousScore;
+      const totalScore = (progress.totalScore || 0) + scoreDiff;
 
       await saveUserProgress(completedLevels, totalScore, levelScores);
       window.dispatchEvent(new CustomEvent('scoreUpdated', {
@@ -78,11 +78,11 @@ const Stage11 = () => {
     if (selectedAnswer === null) return;
     setAnswerSubmitted(true);
     setShowResult(true);
-    
+
     const isCorrect = selectedAnswer === questions[currentQuestion].correct;
     let newScore = score;
     if (isCorrect) { newScore = score + POINTS_PER_QUESTION; setScore(newScore); }
-    
+
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
