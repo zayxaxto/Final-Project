@@ -332,30 +332,6 @@ const Achievements = () => {
           Hall of Achievements
         </h1>
         <p className="achievements-subtitle">Complete missions to earn rewards and badges</p>
-
-        <div className="achievements-stats">
-          <div className="stat-card">
-            <div className="stat-icon unlock">🔓</div>
-            <div className="stat-info">
-              <span className="stat-number">{stats.completed}</span>
-              <span className="stat-label">Unlocked</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon received">🎁</div>
-            <div className="stat-info">
-              <span className="stat-number">{stats.claimed}</span>
-              <span className="stat-label">Claimed</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon points">💎</div>
-            <div className="stat-info">
-              <span className="stat-number">{stats.totalPoints}</span>
-              <span className="stat-label">Total Points</span>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Achievements Grid - แถบยาว */}
