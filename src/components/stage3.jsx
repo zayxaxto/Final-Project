@@ -23,11 +23,11 @@ const Stage3 = () => {
   const POINTS_PER_QUESTION = 20;
 
   const questions = [
-    { question: "แท็กใดใช้สำหรับกำหนดชื่อเรื่องของเอกสาร HTML ที่จะแสดงบนแท็บเบราว์เซอร์", correctAnswers: ["title", "<title>", "TITLE", "<TITLE>"], hint: "แท็กที่อยู่ใน <head>" },
-    { question: "แอตทริบิวต์ใดใช้สำหรับกำหนดที่อยู่ URL ของลิงก์ในแท็ก <a>", correctAnswers: ["href", "HREF", "Href"], hint: "ย่อมาจาก Hypertext Reference" },
+    { question: "แอตทริบิวต์ใดในแท็ก <img> ที่จำเป็นที่สุดสำหรับการแสดงรูปภาพบนเว็บเพจ โดยทำหน้าที่ระบุตำแหน่งของไฟล์รูปภาพ", correctAnswers: ["src"], hint: "แหล่งที่มาของไฟล์" },
+    { question: "องค์ประกอบหลักที่ใช้ในการเชื่อมโยงเว็บเพจหลายหน้าเข้าด้วยกันเป็นเว็บไซต์คืออะไร", correctAnswers: ["Hyperlink", "hyperlink"], hint: "ทางลัดเชื่อมหน้าเว็บ" },
     { question: "แท็กใดใช้สำหรับสร้างตารางใน HTML", correctAnswers: ["table", "<table>", "TABLE", "<TABLE>"], hint: "แท็กหลักสำหรับสร้างตารางข้อมูล" },
     { question: "แอตทริบิวต์ใดใช้สำหรับกำหนดข้อความทดแทนของรูปภาพ", correctAnswers: ["alt", "ALT", "Alt"], hint: "ย่อมาจาก Alternative text" },
-    { question: "แท็กใดใช้สำหรับสร้างรายการแบบมีลำดับ (มีตัวเลข)", correctAnswers: ["ol", "<ol>", "OL", "<OL>"], hint: "ย่อมาจาก Ordered List" }
+    { question: "แท็กใดใช้สำหรับข้อความตัวหนา", correctAnswers: ["<b>"], hint: "อักษรภาษาอังกฤษตัวเดียวที่แปลว่า หนา" }
   ];
 
   useEffect(() => {

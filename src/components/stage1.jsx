@@ -20,11 +20,11 @@ const Stage1 = () => {
   const POINTS_PER_QUESTION = 20;
 
   const questions = [
-    { question: "แท็กใดใช้สำหรับสร้างหัวข้อที่ใหญ่ที่สุดใน HTML", options: ["<h6>", "<h1>", "<header>", "<title>"], correct: 1 },
-    { question: "แท็กใดใช้สำหรับสร้างลิงก์ใน HTML", options: ["<link>", "<url>", "<a>", "<href>"], correct: 2 },
-    { question: "แอตทริบิวต์ใดใช้สำหรับกำหนด URL ปลายทางของลิงก์", options: ["src", "href", "link", "url"], correct: 1 },
-    { question: "แท็กใดใช้สำหรับแสดงรูปภาพใน HTML", options: ["<image>", "<pic>", "<img>", "<photo>"], correct: 2 },
-    { question: "แท็กใดใช้สำหรับสร้างย่อหน้าใน HTML", options: ["<paragraph>", "<p>", "<text>", "<para>"], correct: 1 }
+    { question: "นิยามของ เว็บไซต์ ที่ถูกต้องที่สุดคืออะไร", options: ["กลุ่มของเว็บเพจหลายหน้าที่เชื่อมโยงถึงกันและเข้าถึงผ่าน Web Server ด้วยโดเมนเดียวกัน", "โปรแกรมสำหรับแสดงผลข้อมูลจากฐานข้อมูลของเซิร์ฟเวอร์", "ภาษาที่ใช้ในการเขียนโปรแกรมเพื่อสร้างแอปพลิเคชันบนอินเทอร์เน็ต", "เอกสาร HTML เพียงหน้าเดียวที่ใช้ในการนำเสนอข้อมูล"], correct: 0 },
+    { question: "ภาษา HTML จัดเป็นภาษาประเภทใด", options: ["Programming Language", "Style Sheet Language", "Markup Language", "Scripting Language"], correct: 2 },
+    { question: "ข้อใดเป็นตัวอย่างการวางแท็กซ้อนกัน (Nested Elements) ที่ถูกต้อง", options: ["<p><b> ข้อความตัวหนา </b></p>", "<b><i> ข้อความตัวหนาและเอียง </b></i>", "<title><head> ชื่อเว็บ </head></title>", "<body><html> เนื้อหาเว็บ </html></body>"], correct: 0 },
+    { question: "แท็กใดในมาตรฐาน HTML5 ที่ถูกเพิ่มเข้ามาเพื่อใช้จัดการแสดงผลไฟล์วิดีโอแทนการใช้เทคโนโลยีเดิม", options: ["<object>", "<embed>", "<source>", "<video>"], correct: 3 },
+    { question: "แท็กใดที่ต้องอยู่เป็นบรรทัดแรกสุดของเอกสาร HTML5 เสมอ", options: ["<html>", "<head>", "<!DOCTYPE html>", "<body>"], correct: 2 }
   ];
 
   // บันทึกคะแนนลง Firebase - totalScore = ผลรวมคะแนน Quiz ทุกด่าน

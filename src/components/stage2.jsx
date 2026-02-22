@@ -23,11 +23,11 @@ const Stage2 = () => {
   const POINTS_PER_QUESTION = 20;
 
   const questions = [
-    { question: "แท็ก <div> เป็นแท็กแบบ block-level element ใน HTML", correct: true },
-    { question: "แอตทริบิวต์ alt ของแท็ก <img> เป็นแอตทริบิวต์ที่บังคับต้องใช้ (required) ใน HTML5", correct: false },
-    { question: "แท็ก <span> เป็น inline element ที่สามารถใช้กำหนด width และ height ได้", correct: false },
-    { question: "HTML5 รองรับแท็ก <video> และ <audio> สำหรับแสดงสื่อมัลติมีเดียโดยไม่ต้องใช้ plugin", correct: true },
-    { question: "แอตทริบิวต์ target=\"_blank\" จะทำให้ลิงก์เปิดในแท็บใหม่", correct: true }
+    { question: "ในภาษา HTML คำว่า อิลิเมนต์ (Element) หมายถึง องค์ประกอบทั้งหมด ตั้งแต่แท็กเปิด เนื้อหา ไปจนถึงแท็กปิด", correct: true },
+    { question: "หากต้องการกำหนดให้ข้อความเป็นหัวข้อหลักที่สำคัญที่สุด ควรใช้แท็ก <title>", correct: false },
+    { question: "แท็กที่ใช้สำหรับขึ้นบรรทัดใหม่โดยไม่ต้องเริ่มต้นย่อหน้าใหม่ และถือเป็น Void Element คือแท็ก <hr>", correct: false },
+    { question: "หากต้องการสร้างรายการเมนูที่ใช้สัญลักษณ์จุดนำหน้า ควรใช้แท็กหลักคือ <ol> และแท็กย่อยคือ <li>", correct: true },
+    { question: "แท็ก <ol> และ <ul> ต่างกันที่ฟังก์ชันรูปแบบการแสดงผลของตัวนำหน้ารายการ", correct: true }
   ];
 
   useEffect(() => {

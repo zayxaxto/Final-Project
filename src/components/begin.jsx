@@ -7,31 +7,31 @@ import { useAuth } from '../contexts/AuthContext';
 const SCORE_PER_QUESTION = 75;
 
 // URL วิดีโอ YouTube (แก้เป็น URL ที่ต้องการ)
-const YOUTUBE_URL = 'https://www.youtube.com/watch?v=-jzu5YH6OMQ&t=1s';
+const YOUTUBE_URL = 'https://youtu.be/KLyZ22CF5bA';
 
 // ข้อมูลคำถามแบบทดสอบ
 const quizData = [
   {
     id: 1,
-    triggerTime: 30, // วินาทีที่ 30
-    question: "จากเนื้อหาที่ผ่านมา อะไรคือหัวข้อหลักที่กล่าวถึง?",
+    triggerTime: 143, // วินาทีที่ 30
+    question: "ส่วนของเอกสาร HTML ที่ใช้สำหรับกำหนดชื่อเพจที่จะปรากฏบนแท็บเบราว์เซอร์ ควรถูกกำหนดไว้ในแท็กใด",
     options: [
-      { id: 'a', text: "การพัฒนาเว็บไซต์สมัยใหม่" },
-      { id: 'b', text: "การใช้งาน React และ JavaScript" },
-      { id: 'c', text: "หลักการออกแบบ UI/UX" },
-      { id: 'd', text: "การจัดการฐานข้อมูล" }
+      { id: 'a', text: "<body>" },
+      { id: 'b', text: "<title>" },
+      { id: 'c', text: "<meta>" },
+      { id: 'd', text: "<head>" }
     ],
     correctAnswer: 'b'
   },
   {
     id: 2,
-    triggerTime: 60, // วินาทีที่ 60
-    question: "ข้อใดเป็นประโยชน์หลักของการใช้ Component-based Architecture?",
+    triggerTime: 585, // วินาทีที่ 60
+    question: "แอตทริบิวต์ alt ในแท็ก <img> มีความสำคัญอย่างไร",
     options: [
-      { id: 'a', text: "ลดขนาดไฟล์ของโปรเจค" },
-      { id: 'b', text: "ทำให้โค้ดทำงานเร็วขึ้น 10 เท่า" },
-      { id: 'c', text: "สามารถนำกลับมาใช้ซ้ำและจัดการได้ง่าย" },
-      { id: 'd', text: "ไม่จำเป็นต้องใช้ CSS" }
+      { id: 'a', text: "ใช้กำหนดขนาดความกว้างและความสูงของรูปภาพ" },
+      { id: 'b', text: "ใช้กำหนดชื่อไฟล์รูปภาพที่ใช้ในการจัดเก็บ" },
+      { id: 'c', text: "ใช้กำหนดข้อความสำรองที่จะแสดงเมื่อรูปภาพไม่สามารถโหลดได้" },
+      { id: 'd', text: "ใช้กำหนดชื่อกลุ่มของรูปภาพสำหรับเรียกใช้งานด้วย" }
     ],
     correctAnswer: 'c'
   }
