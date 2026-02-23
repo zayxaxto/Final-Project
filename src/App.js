@@ -41,7 +41,24 @@ function Navbar() {
     const [totalScore, setTotalScore] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        return localStorage.getItem('theme') === 'dark';
+    });
     const { currentUser, logout, getUserProgress } = useAuth();
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [isDarkMode]);
+
+    const toggleTheme = () => {
+        setIsDarkMode(!isDarkMode);
+    };
 
     useEffect(() => {
         const loadUserScore = async () => {
@@ -165,6 +182,9 @@ function Navbar() {
                 </div>
 
                 <div className="navbar-right">
+                    <button onClick={toggleTheme} className="theme-toggle-btn" aria-label="Toggle Dark Mode" title="เปิด/ปิด โหมดมืด">
+                        {isDarkMode ? '☀️' : '🌙'}
+                    </button>
                     <div className="navbar-score">
                         <span className="score-icon">⭐</span>
                         <span className="score-text">{totalScore} แต้ม</span>

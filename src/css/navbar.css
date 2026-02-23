@@ -681,3 +681,198 @@ body.has-navbar .App {
     padding: 0.5rem 0.8rem;
   }
 }
+
+/* ==================== THEME TOGGLE ==================== */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode {
+  /* Common variables overridden in dark mode */
+  --bg-color: #0f172a;
+  --bg-main: #0f172a;
+  --surface-color: #1e293b;
+  --bg-card: #1e293b;
+
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-light: #94a3b8;
+
+  --border-color: #334155;
+
+  --glass-bg: rgba(30, 41, 59, 0.85);
+
+  /* Global Body */
+  background-color: var(--bg-color) !important;
+  color: var(--text-main) !important;
+
+  /* Overwrite grid line colors for dark mode to be darker / less visible */
+  background-image:
+    linear-gradient(#1e293b 1px, transparent 1px),
+    linear-gradient(90deg, #1e293b 1px, transparent 1px) !important;
+}
+
+/* Background floating blobs */
+body.dark-mode .app-container::before {
+  background: radial-gradient(circle, #334155 0%, transparent 70%);
+}
+
+body.dark-mode .app-container::after {
+  background: radial-gradient(circle, #1e293b 0%, transparent 70%);
+}
+
+/* Ensure components originally hardcoded as 'white' adopt dark mode variants */
+body.dark-mode .video-container,
+body.dark-mode .quiz-modal,
+body.dark-mode .question,
+body.dark-mode .progress-info,
+body.dark-mode .stat-card,
+body.dark-mode .achievement-card,
+body.dark-mode .achievements-summary,
+body.dark-mode .option-btn {
+  background-color: var(--surface-color) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .video-container {
+  background: rgba(30, 41, 59, 0.8) !important;
+}
+
+body.dark-mode .achievement-card {
+  background: rgba(30, 41, 59, 0.85) !important;
+}
+
+/* Fix locked achievement cards */
+body.dark-mode .achievement-card.locked {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  border-color: #475569 !important;
+}
+
+/* Ensure texts that were using hardcoded grey or main colors adapt */
+body.dark-mode .question p,
+body.dark-mode .option-text,
+body.dark-mode .achievement-title {
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .header p,
+body.dark-mode .stat-label,
+body.dark-mode .achievement-description,
+body.dark-mode .progress-text {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .quiz-number {
+  background-color: #334155 !important;
+  color: var(--text-main) !important;
+}
+
+/* Option Buttons Hover & Selected */
+body.dark-mode .option-btn:hover:not(:disabled) {
+  background-color: #334155 !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode .option-btn.selected {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  border-color: #3b82f6 !important;
+}
+
+/* Keep header titles readable */
+body.dark-mode .header h1,
+body.dark-mode .achievements-title,
+body.dark-mode .posttest-header h1 {
+  background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ==================== POST-TEST DARK MODE ==================== */
+body.dark-mode .posttest-header,
+body.dark-mode .question-card,
+body.dark-mode .option-label,
+body.dark-mode .info-item,
+body.dark-mode .result-card,
+body.dark-mode .score-display,
+body.dark-mode .review-item,
+body.dark-mode .btn-clear {
+  background-color: var(--surface-color) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+/* Specific background overrides per state */
+body.dark-mode .option-label:hover {
+  background-color: #334155 !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode .option-label.selected {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  border-color: #3b82f6 !important;
+}
+
+body.dark-mode .review-item.correct {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+  border-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+body.dark-mode .review-item.incorrect {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+body.dark-mode .btn-clear:hover {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+/* Text Colors for Post Test */
+body.dark-mode .question-text,
+body.dark-mode .score-number,
+body.dark-mode .result-card h2,
+body.dark-mode .answer-review h3,
+body.dark-mode .review-question {
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .header-description,
+body.dark-mode .score-percentage,
+body.dark-mode .your-answer,
+body.dark-mode .correct-answer,
+body.dark-mode .result-message {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .question-number {
+  background-color: #334155 !important;
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .result-card::before,
+body.dark-mode .result-card::after {
+  opacity: 0.1;
+}
