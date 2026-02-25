@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import '../css/ach.css';
+import raffyImg from '../img/Raffy.png';
 
 const Achievements = () => {
   const [achievements, setAchievements] = useState([]);
@@ -325,13 +326,20 @@ const Achievements = () => {
 
   return (
     <div className="achievements-container">
-      {/* Header Section */}
       <div className="achievements-header">
         <h1 className="achievements-title">
-          <span className="title-icon">🏆</span>
           Hall of Achievements
         </h1>
         <p className="achievements-subtitle">Complete missions to earn rewards and badges</p>
+      </div>
+
+      {/* Hero Section with Mascot */}
+      <div className="ach-hero-section">
+        <img src={raffyImg} alt="Raffy Mascot" className="ach-raffy-mascot" />
+        <div className="ach-hero-text">
+          <h2 className="ach-welcome-text">Unlock Badges!</h2>
+          <p className="ach-welcome-subtext">เคลียร์เงื่อนไขเพื่อรับรางวัลและป้ายเกียรติยศ</p>
+        </div>
       </div>
 
       {/* Achievements Grid - แถบยาว */}

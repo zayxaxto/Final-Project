@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../css/auth.css';
+import kmutnbLogo from '../img/kmutnb.png';
+import cedLogo from '../img/ced.png';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -62,14 +64,14 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setLoading(true);
-    
+
     try {
       const result = await register(formData);
-      
+
       if (result.success) {
         alert('สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ');
         navigate('/login');
@@ -87,12 +89,16 @@ const Register = () => {
     <div className="auth-container">
       <div className="auth-left">
         <h1 className="auth-brand">CodeRaffy</h1>
+        <div className="brand-logos">
+          <img src={kmutnbLogo} alt="KMUTNB" className="brand-logo" />
+          <img src={cedLogo} alt="CED" className="brand-logo" />
+        </div>
       </div>
       <div className="auth-right">
         <div className="auth-form-container">
           <h2 className="auth-title">Create Account</h2>
           <p className="auth-subtitle">Join us today and get started</p>
-          
+
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="fullName">Full Name</label>
@@ -150,8 +156,8 @@ const Register = () => {
               {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="auth-button register-button"
               disabled={loading}
             >

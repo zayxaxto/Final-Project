@@ -6,12 +6,7 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Kanit', sans-serif;
-  background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+
 
 .stage2-quiz-container {
   max-width: 800px;
@@ -118,6 +113,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -256,23 +252,33 @@ body {
 }
 
 @keyframes stage2-correct-bounce {
-  0%, 20%, 60%, 100% { 
-    transform: translateY(-5px); 
+
+  0%,
+  20%,
+  60%,
+  100% {
+    transform: translateY(-5px);
   }
-  40%, 80% { 
-    transform: translateY(-12px) scale(1.05); 
+
+  40%,
+  80% {
+    transform: translateY(-12px) scale(1.05);
   }
 }
 
 @keyframes stage2-incorrect-shake {
-  0%, 100% { 
-    transform: translateX(0) translateY(-5px); 
+
+  0%,
+  100% {
+    transform: translateX(0) translateY(-5px);
   }
-  25% { 
-    transform: translateX(-8px) translateY(-5px); 
+
+  25% {
+    transform: translateX(-8px) translateY(-5px);
   }
-  75% { 
-    transform: translateX(8px) translateY(-5px); 
+
+  75% {
+    transform: translateX(8px) translateY(-5px);
   }
 }
 
@@ -309,6 +315,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -359,6 +366,7 @@ body {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -406,44 +414,44 @@ body {
   .stage2-quiz-container {
     padding: 15px;
   }
-  
+
   .stage2-quiz-header {
     padding: 20px;
   }
-  
+
   .stage2-quiz-title {
     font-size: 2rem;
   }
-  
+
   .stage2-quiz-content {
     padding: 25px;
   }
-  
+
   .stage2-question-container {
     padding: 30px 20px;
   }
-  
+
   .stage2-question-text {
     font-size: 1.2rem;
   }
-  
+
   .stage2-true-false-container {
     flex-direction: column;
     align-items: center;
     gap: 20px;
   }
-  
+
   .stage2-tf-button {
     width: 80%;
     max-width: 250px;
     font-size: 1.2rem;
     padding: 20px 35px;
   }
-  
+
   .stage2-completion-title {
     font-size: 2.5rem;
   }
-  
+
   .stage2-final-score {
     font-size: 2rem;
   }
@@ -454,36 +462,36 @@ body {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
+
   .stage2-quiz-title {
     font-size: 1.8rem;
   }
-  
+
   .stage2-info-item {
     padding: 10px;
   }
-  
+
   .stage2-info-value {
     font-size: 1.5rem;
   }
-  
+
   .stage2-question-text {
     font-size: 1.1rem;
   }
-  
+
   .stage2-tf-button {
     font-size: 1.1rem;
     padding: 18px 30px;
   }
-  
+
   .stage2-true-false-container {
     gap: 15px;
   }
-  
+
   .stage2-completion-title {
     font-size: 2rem;
   }
-  
+
   .stage2-final-score {
     font-size: 1.8rem;
   }

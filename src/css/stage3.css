@@ -6,12 +6,7 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Kanit', sans-serif;
-  background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+
 
 .stage3-quiz-container {
   max-width: 800px;
@@ -118,6 +113,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -266,8 +262,15 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .stage3-result-indicator.stage3-result-correct {
@@ -306,6 +309,7 @@ body {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -358,48 +362,48 @@ body {
   .stage3-quiz-container {
     padding: 15px;
   }
-  
+
   .stage3-quiz-header {
     padding: 20px;
   }
-  
+
   .stage3-quiz-title {
     font-size: 2rem;
   }
-  
+
   .stage3-question-container {
     padding: 30px 20px;
   }
-  
+
   .stage3-question-text {
     font-size: 1.2rem;
     padding: 20px;
   }
-  
+
   .stage3-answer-input {
     font-size: 1.1rem;
     padding: 18px 20px;
   }
-  
+
   .stage3-submit-button {
     padding: 16px 35px;
     font-size: 1rem;
   }
-  
+
   .stage3-completion-title {
     font-size: 2.5rem;
   }
-  
+
   .stage3-final-score {
     font-size: 2rem;
     padding: 20px;
   }
-  
+
   .stage3-question-stats {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .stage3-stat-item {
     min-width: auto;
   }
@@ -410,43 +414,44 @@ body {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
+
   .stage3-quiz-title {
     font-size: 1.8rem;
   }
-  
+
   .stage3-info-item {
     padding: 10px;
   }
-  
+
   .stage3-info-value {
     font-size: 1.5rem;
   }
-  
+
   .stage3-question-text {
     font-size: 1.1rem;
     padding: 15px;
   }
-  
+
   .stage3-answer-input {
     font-size: 1rem;
     padding: 15px 18px;
   }
-  
-  .stage3-submit-button, .stage3-play-again-button {
+
+  .stage3-submit-button,
+  .stage3-play-again-button {
     padding: 14px 30px;
     font-size: 0.9rem;
   }
-  
+
   .stage3-completion-title {
     font-size: 2rem;
   }
-  
+
   .stage3-final-score {
     font-size: 1.6rem;
     padding: 15px;
   }
-  
+
   .stage3-input-hint {
     font-size: 1rem;
     padding: 12px 15px;

@@ -6,12 +6,7 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Kanit', sans-serif;
-  background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+
 
 .stage1-quiz-container {
   max-width: 800px;
@@ -117,6 +112,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -206,8 +202,13 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .stage1-result-indicator.stage1-result-correct {
@@ -269,6 +270,7 @@ body {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -315,32 +317,32 @@ body {
   .stage1-quiz-container {
     padding: 15px;
   }
-  
+
   .stage1-quiz-header {
     padding: 20px;
   }
-  
+
   .stage1-quiz-title {
     font-size: 2rem;
   }
-  
+
   .stage1-question-container {
     padding: 30px 20px;
   }
-  
+
   .stage1-question-text {
     font-size: 1.2rem;
   }
-  
+
   .stage1-option-button {
     padding: 15px 20px;
     font-size: 1rem;
   }
-  
+
   .stage1-completion-title {
     font-size: 2.5rem;
   }
-  
+
   .stage1-final-score {
     font-size: 2rem;
   }
@@ -350,28 +352,28 @@ body {
   .stage1-quiz-title {
     font-size: 1.8rem;
   }
-  
+
   .stage1-info-item {
     padding: 10px;
   }
-  
+
   .stage1-info-value {
     font-size: 1.5rem;
   }
-  
+
   .stage1-question-text {
     font-size: 1.1rem;
   }
-  
+
   .stage1-option-button {
     padding: 12px 15px;
     font-size: 0.95rem;
   }
-  
+
   .stage1-completion-title {
     font-size: 2rem;
   }
-  
+
   .stage1-final-score {
     font-size: 1.8rem;
   }

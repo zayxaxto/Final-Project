@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../css/auth.css';
+import kmutnbLogo from '../img/kmutnb.png';
+import cedLogo from '../img/ced.png';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -46,14 +48,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setLoading(true);
-    
+
     try {
       const result = await login(formData.username, formData.password);
-      
+
       if (result.success) {
         navigate('/');
       } else {
@@ -70,12 +72,16 @@ const Login = () => {
     <div className="auth-container">
       <div className="auth-left login-left">
         <h1 className="auth-brand">CodeRaffy</h1>
+        <div className="brand-logos">
+          <img src={kmutnbLogo} alt="KMUTNB" className="brand-logo" />
+          <img src={cedLogo} alt="CED" className="brand-logo" />
+        </div>
       </div>
       <div className="auth-right">
         <div className="auth-form-container">
           <h2 className="auth-title">Welcome</h2>
           <p className="auth-subtitle">Please sign in to your account</p>
-          
+
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="username">Username</label>
@@ -105,8 +111,8 @@ const Login = () => {
               {errors.password && <span className="error-message">{errors.password}</span>}
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="auth-button login-button"
               disabled={loading}
             >

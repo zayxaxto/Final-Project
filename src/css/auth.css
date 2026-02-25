@@ -142,6 +142,52 @@ body.has-navbar .App {
   pointer-events: none;
 }
 
+/* Brand Logos (KMUTNB and CED) */
+.brand-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 35px;
+  opacity: 0;
+  animation: fadeInLogos 1s ease-in-out forwards;
+  animation-delay: 0.3s;
+  z-index: 2;
+  /* ปร้บเป็นกระจกมืดโปร่งแสง (Dark Glassmorphism) ให้กลืนไปกับพื้นหลังสีเข้ม */
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px 35px;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@keyframes fadeInLogos {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brand-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* เพิ่มเงาสีขาวแบบละมุนๆ ให้โลโก้อ่านง่ายแม้พื้นจะมืด */
+  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.25));
+}
+
+.brand-logo:hover {
+  transform: translateY(-5px) scale(1.1);
+  filter: drop-shadow(0 4px 15px rgba(255, 255, 255, 0.5));
+}
+
 /* ==================== RIGHT SIDE (Form Area) ==================== */
 .auth-right {
   flex: 1;

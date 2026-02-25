@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../css/level.css';
+import raffyImg from '../img/Raffy.png';
 
 const GameLevels = () => {
     const [completedLevels, setCompletedLevels] = useState([]);
@@ -111,6 +112,16 @@ const GameLevels = () => {
     return (
         <div className="game-container">
             <div className="content-wrapper">
+
+                {/* Hero Section with Mascot */}
+                <div className="hero-section">
+                    <img src={raffyImg} alt="Raffy Mascot" className="raffy-mascot" />
+                    <div className="hero-text">
+                        <h2 className="welcome-text">Let's Learn & Play!</h2>
+                        <p className="welcome-subtext">ตะลุยด่านเพื่อเก็บคะแนนไปกับ Raffy</p>
+                    </div>
+                </div>
+
                 <div className="requirement-banner">
                     <div className="banner-icon">⚠️</div>
                     <p>ต้องได้คะแนน {MIN_PASSING_SCORE}/100 ขึ้นไป (80%) จึงจะผ่านด่าน</p>
