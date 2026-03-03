@@ -27,7 +27,9 @@
 }
 
 @keyframes admSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ==================== HEADER ==================== */
@@ -363,6 +365,24 @@
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
+.adm-delete-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.adm-delete-btn:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
 /* ==================== MODAL - COMPACT SIZE ==================== */
 .adm-modal-overlay {
   position: fixed;
@@ -381,8 +401,13 @@
 }
 
 @keyframes admFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .adm-modal {
@@ -402,6 +427,7 @@
     opacity: 0;
     transform: translateY(15px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1131,6 +1157,7 @@
 
 /* ==================== PRINT ==================== */
 @media print {
+
   .adm-controls,
   .adm-detail-btn,
   .adm-modal-overlay {

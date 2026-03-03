@@ -19,7 +19,7 @@ const PostTest = () => {
           // ใช้ currentUser.id แทน currentUser.username
           const userRef = ref(database, `users/${currentUser.id}/postTestScore`);
           const snapshot = await get(userRef);
-          
+
           if (snapshot.exists()) {
             setPreviousScore(snapshot.val());
             console.log('Previous score loaded:', snapshot.val());
@@ -37,223 +37,223 @@ const PostTest = () => {
   const questions = [
     {
       id: 1,
-      question: "HTML ย่อมาจากอะไร?",
+      question: "ภาษา HTML จัดเป็นภาษาประเภทใด",
       options: [
-        "Hyper Text Markup Language",
-        "High Tech Modern Language",
-        "Home Tool Markup Language",
-        "Hyperlinks and Text Markup Language"
+        "Markup Language",
+        "Style Sheet Language",
+        "Programming Language",
+        "Scripting Language"
       ],
       correct: 0
     },
     {
       id: 2,
-      question: "Tag ใดใช้สำหรับสร้างหัวข้อขนาดใหญ่ที่สุดใน HTML?",
+      question: "ข้อใดคือคุณลักษณะใหม่ใน HTML5 ที่ช่วยให้กำหนดโครงสร้างเนื้อหาได้อย่างมีความหมาย",
       options: [
-        "<head>",
-        "<h6>",
-        "<heading>",
-        "<h1>"
+        "การใช้แท็ก <div> แทนแท็กโครงสร้างทั้งหมด",
+        "การเพิ่มแท็กมัลติมีเดีย เช่น <audio> และ <video>",
+        "การเพิ่มแท็กโครงสร้างที่มีความหมาย",
+        "การบังคับใช้กฎการปิดแท็กแบบ XHTML"
       ],
-      correct: 3
+      correct: 2
     },
     {
       id: 3,
-      question: "คุณสมบัติใดใช้เปลี่ยนสีพื้นหลังใน CSS?",
+      question: "ส่วนของเอกสาร HTML ที่ใช้สำหรับกำหนดชื่อเพจที่จะปรากฏบนแท็บเบราว์เซอร์ ควรถูกกำหนดไว้ในแท็กใด",
       options: [
-        "bgcolor",
-        "color",
-        "background-color",
-        "bg-color"
-      ],
-      correct: 2
-    },
-    {
-      id: 4,
-      question: "Tag ใดใช้สำหรับสร้างลิงก์ใน HTML?",
-      options: [
-        "<link>",
-        "<a>",
-        "<href>",
-        "<url>"
-      ],
-      correct: 1
-    },
-    {
-      id: 5,
-      question: "CSS ย่อมาจากอะไร?",
-      options: [
-        "Computer Style Sheets",
-        "Creative Style Sheets",
-        "Cascading Style Sheets",
-        "Colorful Style Sheets"
-      ],
-      correct: 2
-    },
-    {
-      id: 6,
-      question: "วิธีใดใช้แทรก JavaScript ภายนอกใน HTML?",
-      options: [
-        "<script href='file.js'>",
-        "<script name='file.js'>",
-        "<script src='file.js'>",
-        "<javascript src='file.js'>"
-      ],
-      correct: 2
-    },
-    {
-      id: 7,
-      question: "Tag ใดใช้สำหรับแสดงรูปภาพใน HTML?",
-      options: [
-        "<image>",
-        "<img>",
-        "<picture>",
-        "<photo>"
-      ],
-      correct: 1
-    },
-    {
-      id: 8,
-      question: "คำสั่งใดใช้แสดงข้อความใน Console ของ JavaScript?",
-      options: [
-        "print()",
-        "console.log()",
-        "alert()",
-        "display()"
-      ],
-      correct: 1
-    },
-    {
-      id: 9,
-      question: "คุณสมบัติใดใช้จัดข้อความให้อยู่กึ่งกลางใน CSS?",
-      options: [
-        "align: center",
-        "text-align: center",
-        "text-center: true",
-        "align-text: center"
-      ],
-      correct: 1
-    },
-    {
-      id: 10,
-      question: "Tag ใดใช้สร้างรายการแบบมีลำดับเลข?",
-      options: [
-        "<ul>",
-        "<list>",
-        "<ol>",
-        "<dl>"
-      ],
-      correct: 2
-    },
-    {
-      id: 11,
-      question: "Bootstrap เป็นอะไร?",
-      options: [
-        "ภาษาโปรแกรม",
-        "CSS Framework",
-        "JavaScript Library",
-        "Database"
-      ],
-      correct: 1
-    },
-    {
-      id: 12,
-      question: "Selector ใดเลือก element ที่มี id='demo' ใน CSS?",
-      options: [
-        ".demo",
-        "*demo",
-        "#demo",
-        "demo"
-      ],
-      correct: 2
-    },
-    {
-      id: 13,
-      question: "Tag ใดใช้สร้างตารางใน HTML?",
-      options: [
-        "<table>",
-        "<tab>",
-        "<grid>",
-        "<data>"
+        "<title>",
+        "<body>",
+        "<meta>",
+        "<head>"
       ],
       correct: 0
     },
     {
-      id: 14,
-      question: "คุณสมบัติใดใช้กำหนดความกว้างของ element ใน CSS?",
+      id: 4,
+      question: "หากต้องการกำหนดให้ข้อความเป็นหัวข้อหลักที่สำคัญที่สุด ควรใช้แท็กใด",
       options: [
-        "size",
-        "width",
-        "length",
-        "w"
+        "<title>",
+        "<h2>",
+        "<h1>",
+        "<p>"
+      ],
+      correct: 2
+    },
+    {
+      id: 5,
+      question: "แอตทริบิวต์ใดในแท็ก <img> ที่จำเป็นที่สุดสำหรับการแสดงรูปภาพบนเว็บเพจ โดยทำหน้าที่ระบุตำแหน่ง",
+      options: [
+        "id",
+        "src",
+        "alt",
+        "title"
       ],
       correct: 1
     },
     {
-      id: 15,
-      question: "var, let, const ใช้ทำอะไรใน JavaScript?",
+      id: 6,
+      question: "ข้อใดกล่าวถึงหน้าที่หลักของ CSS ได้ถูกต้องที่สุด",
       options: [
-        "สร้าง function",
-        "ประกาศตัวแปร",
-        "สร้าง loop",
-        "สร้าง object"
-      ],
-      correct: 1
-    },
-    {
-      id: 16,
-      question: "Tag ใดใช้สำหรับสร้างปุ่มใน HTML?",
-      options: [
-        "<btn>",
-        "<input type='button'>",
-        "<button>",
-        "ทั้ง B และ C"
+        "ใช้เขียนโครงสร้างเว็บไซต์",
+        "ใช้จัดการฐานข้อมูลเว็บไซต์",
+        "ใช้ประมวลผลฝั่งเซิร์ฟเวอร์",
+        "ใช้กำหนดรูปแบบและความสวยงามของเว็บไซต์"
       ],
       correct: 3
     },
     {
-      id: 17,
-      question: "คุณสมบัติใดใช้เปลี่ยนสีตัวอักษรใน CSS?",
+      id: 7,
+      question: "CSS ย่อมาจากข้อใด",
       options: [
-        "text-color",
-        "font-color",
+        "Cascading Style Sheet ",
+        "Computer Style Sheet ",
+        "Creative Style Sheet ",
+        "Control Style Sheet "
+      ],
+      correct: 0
+    },
+    {
+      id: 8,
+      question: "คุณสมบัติใดใช้จัดตำแหน่งข้อความให้อยู่กึ่งกลาง",
+      options: [
+        "text-style",
+        "font-align: center",
+        "align-text: center ",
+        "text-align: center"
+      ],
+      correct: 3
+    },
+    {
+      id: 9,
+      question: "คุณสมบัติใดใช้กำหนดสีพื้นหลัง",
+      options: [
         "color",
-        "text-style"
+        "bg-color",
+        "background-image",
+        "background-color"
+      ],
+      correct: 3
+    },
+    {
+      id: 10,
+      question: "แอตทริบิวต์ใดใช้ระบุไฟล์ CSS",
+      options: [
+        "href",
+        "src",
+        "class",
+        "Id"
+      ],
+      correct: 0
+    },
+    {
+      id: 11,
+      question: "ข้อใดอธิบายหน้าที่หลักของ JavaScript ได้ถูกต้องที่สุด",
+      options: [
+        "ใช้รับคำสั่งและโต้ตอบกับผู้ใช้",
+        "ใช้กำหนดโครงสร้างหน้าเว็บ",
+        "ใช้ตกแต่งสีและรูปแบบหน้าเว็บ",
+        "ใช้จัดเก็บข้อมูลถาวรบนเซิร์ฟเวอร์"
+      ],
+      correct: 0
+    },
+    {
+      id: 12,
+      question: "ข้อใดกล่าวถูกต้องเกี่ยวกับการเขียนคำสั่ง JavaScript",
+      options: [
+        "ต้องเขียนคำสั่ง JavaScript แยกเป็นไฟล์ .js เท่านั้น",
+        "ต้องเขียนคำสั่ง JavaScript ภายใต้แท็ก <script> ... </script>",
+        "ต้องเขียนคำสั่ง JavaScript ไว้นอกเอกสาร HTML ",
+        "สามารถเขียนคำสั่ง JavaScript แทนที่แท็ก"
+      ],
+      correct: 1
+    },
+    {
+      id: 13,
+      question: "คำสั่ง document.write() มีหน้าที่ใด",
+      options: [
+        "บันทึกข้อมูลลงฐานข้อมูล",
+        "แสดงข้อความแจ้งเตือน",
+        "แสดงผลข้อความลงบนหน้าเว็บ",
+        "ตรวจสอบข้อผิดพลาดของโปรแกรม"
       ],
       correct: 2
+    },
+    {
+      id: 14,
+      question: "ข้อใดเป็นรูปแบบคำสั่งที่ถูกต้องในการแสดงผลข้อมูลด้วย console.log",
+      options: [
+        "log.console(true);",
+        "console = log(false);",
+        "console(false).log;",
+        "console.log(true);"
+      ],
+      correct: 3
+    },
+    {
+      id: 15,
+      question: "ข้อใดเป็นรูปแบบการประกาศตัวแปรด้วย const ที่ถูกต้อง",
+      options: [
+        "const = y 20;",
+        "const y;",
+        "const y = 20;",
+        "y const = 20;"
+      ],
+      correct: 2
+    },
+    {
+      id: 16,
+      question: "Bootstrap คืออะไร",
+      options: [
+        "ภาษาเขียนโปรแกรม",
+        "โปรแกรมออกแบบกราฟิก",
+        "Framework สำหรับพัฒนาเว็บไซต์",
+        "ระบบจัดการฐานข้อมูล"
+      ],
+      correct: 2
+    },
+    {
+      id: 17,
+      question: "Bootstrap รองรับการแสดงผลหลายอุปกรณ์ด้วยแนวคิดใด",
+      options: [
+        "Static Web",
+        "Responsive Web Design",
+        "Fixed Layout",
+        "Inline Design"
+      ],
+      correct: 1
     },
     {
       id: 18,
-      question: "Tag ใดใช้สำหรับสร้าง dropdown list?",
+      question: "Grid System ของ Bootstrap แบ่งเป็นกี่คอลัมน์",
       options: [
-        "<list>",
-        "<dropdown>",
-        "<select>",
-        "<option>"
+        "8 คอลัมน์",
+        "16 คอลัมน์",
+        "10 คอลัมน์",
+        "12 คอลัมน์"
       ],
-      correct: 2
+      correct: 3
     },
     {
       id: 19,
-      question: "Class ใน Bootstrap ที่ทำให้ปุ่มมีสีน้ำเงิน?",
+      question: "คลาสใดแสดงข้อความสีเขียว",
       options: [
-        "btn-blue",
-        "btn-primary",
-        "btn-info",
-        "button-blue"
+        "text-success",
+        "text-warning",
+        "text-danger",
+        "text-info"
       ],
-      correct: 1
+      correct: 0
     },
     {
       id: 20,
-      question: "<!DOCTYPE html> มีความหมายว่าอย่างไร?",
+      question: "container-fluid มีลักษณะอย่างไร",
       options: [
-        "เป็นการกำหนดชื่อเอกสาร",
-        "เป็นการบอกว่าเป็น HTML5",
-        "เป็นการสร้างหัวข้อ",
-        "ไม่มีความหมาย"
+        "กว้างเต็มหน้าจอ",
+        "กว้างคงที่",
+        "ใช้เฉพาะมือถือ",
+        "ใช้กับ Card เท่านั้น"
       ],
-      correct: 1
+      correct: 0
     }
   ];
 
@@ -266,7 +266,7 @@ const PostTest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // ตรวจสอบว่าตอบครบทุกข้อหรือไม่
     if (Object.keys(answers).length < questions.length) {
       alert('กรุณาตอบคำถามให้ครบทุกข้อ');
@@ -344,8 +344,8 @@ const PostTest = () => {
               {passed ? 'ผ่าน ✓' : 'ไม่ผ่าน ✗'}
             </div>
             <p className="result-message">
-              {passed 
-                ? 'ยินดีด้วย! คุณผ่านแบบทดสอบ' 
+              {passed
+                ? 'ยินดีด้วย! คุณผ่านแบบทดสอบ'
                 : 'คุณต้องได้คะแนนอย่างน้อย 60% เพื่อผ่านแบบทดสอบ'}
             </p>
 
@@ -359,7 +359,7 @@ const PostTest = () => {
                 ) : null}
               </div>
             )}
-            
+
             <div className="answer-review">
               <h3>เฉลยคำตอบ</h3>
               {questions.map((q, index) => {
@@ -421,8 +421,8 @@ const PostTest = () => {
             <p className="question-text">{q.question}</p>
             <div className="options-container">
               {q.options.map((option, optionIndex) => (
-                <label 
-                  key={optionIndex} 
+                <label
+                  key={optionIndex}
                   className={`option-label ${answers[q.id] === optionIndex ? 'selected' : ''}`}
                 >
                   <input

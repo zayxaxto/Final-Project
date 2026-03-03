@@ -24,11 +24,31 @@ const Stage7 = () => {
 
   // คำถาม JavaScript (ใช้ข้อสอบชั่วคราว - เปลี่ยนทีหลังได้)
   const questions = [
-    { question: "คำสั่งใดใช้สำหรับประกาศตัวแปรใน JavaScript", options: ["var", "variable", "declare", "def"], correct: 0 },
-    { question: "ฟังก์ชันใดใช้สำหรับแสดงข้อความใน Console", options: ["print()", "echo()", "console.log()", "display()"], correct: 2 },
-    { question: "ตัวดำเนินการใดใช้เปรียบเทียบค่าและชนิดข้อมูล", options: ["==", "===", "=", "!="], correct: 1 },
-    { question: "คำสั่งใดใช้สำหรับวนลูป", options: ["loop", "repeat", "for", "iterate"], correct: 2 },
-    { question: "Method ใดใช้เพิ่มข้อมูลต่อท้าย Array", options: ["add()", "push()", "append()", "insert()"], correct: 1 }
+    {
+      question: "คำสั่งใดใช้สำหรับประกาศตัวแปรแบบที่ไม่สามารถเปลี่ยนค่าได้",
+      options: ["var", "const", "let", "variable"],
+      correct: 1
+    },
+    {
+      question: "ชนิดข้อมูลใดใช้เก็บค่าตัวเลขในภาษา JavaScript",
+      options: ["Boolean", "Array", "Number", "String"],
+      correct: 2
+    },
+    {
+      question: "โครงสร้างใดใช้สำหรับตัดสินใจเลือกทำงานตามเงื่อนไข",
+      options: ["while", "for", "switch", "if...else"],
+      correct: 3
+    },
+    {
+      question: "คำสั่งใดใช้สำหรับสร้างฟังก์ชันใน JavaScript",
+      options: ["create", "define", "method", "function"],
+      correct: 3
+    },
+    {
+      question: "เมธอดใดใช้สำหรับเข้าถึง element ผ่าน id",
+      options: ["getElementById()", "querySelector()", "getElementsByClassName()", "selectId()"],
+      correct: 0
+    }
   ];
 
   useEffect(() => {
@@ -200,17 +220,17 @@ const Stage7 = () => {
                 </div>
               </>
             )}
-            <div style={{ fontSize: '2em', marginBottom: '15px' }}>คะแนน Quiz: {finalScore}/100</div>
-            <div style={{ fontSize: '1.3em', color: '#555', marginBottom: '25px', padding: '15px', background: '#f5f5f5', borderRadius: '10px' }}>
+            <div className="stage-final-score-text" style={{ fontSize: "2em", marginBottom: "15px" }}>คะแนน Quiz: {finalScore}/100</div>
+            <div className="stage-correct-review-text" style={{ fontSize: "1.3em", marginBottom: "25px", padding: "15px", borderRadius: "10px" }}>
               ตอบถูก <strong style={{ color: isPassed ? '#4caf50' : '#f44336' }}>{correctAnswers}</strong> จาก {questions.length} ข้อ
               {finalScore === 100 && <div style={{ color: '#4caf50', fontWeight: 'bold', marginTop: '15px' }}>🏆 คะแนนเต็ม!</div>}
             </div>
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="stage1-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}>
-                {isPassed ? 'Play Again' : 'Play Again'}
+            <div className="stage-action-buttons">
+              <button className="stage-btn stage-btn-primary" onClick={resetGame}>
+                ↻ {isPassed ? 'Play Again' : 'Try Again'}
               </button>
-              <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>
-                Return to the stage selection page
+              <button className="stage-btn stage-btn-secondary" onClick={() => navigate('/')}>
+                🏠 Return to Stages
               </button>
             </div>
           </div>

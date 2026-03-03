@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { database } from '../firebase';
-import { ref, get } from 'firebase/database';
+import { ref, get, remove } from 'firebase/database';
 import '../css/admin.css';
 
 const AdminDashboard = () => {
@@ -30,8 +30,10 @@ const AdminDashboard = () => {
 
   // รายการวิดีโอทั้งหมด (เพิ่มตามที่มีในระบบ)
   const videoList = [
-    { id: 'html_video_1', title: 'HTML Basics', totalQuizzes: 2, pointsPerQuiz: 75 },
-    // สามารถเพิ่มวิดีโออื่นๆ ได้ตรงนี้
+    { id: 'html_video_1', title: 'Episode 1 : HTML', totalQuizzes: 2, pointsPerQuiz: 75 },
+    { id: 'inter_video_1', title: 'Episode 2 : CSS', totalQuizzes: 2, pointsPerQuiz: 75 },
+    { id: 'advan_video_1', title: 'Episode 3 : Javascript', totalQuizzes: 2, pointsPerQuiz: 75 },
+    { id: 'bootstrap_video_1', title: 'Episode 4 : Bootstrap', totalQuizzes: 2, pointsPerQuiz: 75 }
   ];
 
   // รายการด่านทั้งหมด
@@ -64,7 +66,7 @@ const AdminDashboard = () => {
       try {
         const usersRef = ref(database, 'users');
         const snapshot = await get(usersRef);
-        
+
         if (snapshot.exists()) {
           const usersData = snapshot.val();
           const usersMap = new Map();
@@ -72,7 +74,7 @@ const AdminDashboard = () => {
           for (const [key, userData] of Object.entries(usersData)) {
             if (userData.username && userData.fullName) {
               const username = userData.username;
-              
+
               usersMap.set(username, {
                 id: key,
                 username: userData.username,
@@ -94,17 +96,17 @@ const AdminDashboard = () => {
             try {
               const separateRef = ref(database, `${username}/postTestScore`);
               const separateSnapshot = await get(separateRef);
-              
+
               if (separateSnapshot.exists()) {
                 const separatePostTest = separateSnapshot.val();
                 const user = usersMap.get(username);
-                
+
                 if (!user.postTestScore) {
                   user.postTestScore = separatePostTest;
                 } else {
                   const userDate = new Date(user.postTestScore.completedAt || 0);
                   const separateDate = new Date(separatePostTest.completedAt || 0);
-                  
+
                   if (separateDate > userDate) {
                     user.postTestScore = separatePostTest;
                   }
@@ -137,7 +139,7 @@ const AdminDashboard = () => {
     const totalUsers = users.length;
     const totalScore = users.reduce((sum, user) => sum + (user.gameProgress?.totalScore || 0), 0);
     const averageScore = totalUsers > 0 ? Math.round(totalScore / totalUsers) : 0;
-    const completedAllLevels = users.filter(user => 
+    const completedAllLevels = users.filter(user =>
       user.gameProgress?.completedLevels?.length >= 12
     ).length;
     const completedPostTest = users.filter(user => user.postTestScore !== null).length;
@@ -169,8 +171,8 @@ const AdminDashboard = () => {
         case 'score':
           return (b.gameProgress?.totalScore || 0) - (a.gameProgress?.totalScore || 0);
         case 'progress':
-          return (b.gameProgress?.completedLevels?.length || 0) - 
-                 (a.gameProgress?.completedLevels?.length || 0);
+          return (b.gameProgress?.completedLevels?.length || 0) -
+            (a.gameProgress?.completedLevels?.length || 0);
         case 'name':
           return (a.fullName || '').localeCompare(b.fullName || '');
         case 'recent':
@@ -209,20 +211,20 @@ const AdminDashboard = () => {
   // คำนวณคะแนนจากวิดีโอ
   const getVideoQuizStats = (videoQuizProgress) => {
     if (!videoQuizProgress) return { totalPoints: 0, correctAnswers: 0, totalAnswered: 0, videos: [] };
-    
+
     let totalPoints = 0;
     let correctAnswers = 0;
     let totalAnswered = 0;
     const videos = [];
 
     for (const [videoId, quizzes] of Object.entries(videoQuizProgress)) {
-      const videoInfo = videoList.find(v => v.id === videoId) || { 
-        id: videoId, 
-        title: videoId, 
+      const videoInfo = videoList.find(v => v.id === videoId) || {
+        id: videoId,
+        title: videoId,
         totalQuizzes: Object.keys(quizzes).length,
         pointsPerQuiz: 75
       };
-      
+
       let videoCorrect = 0;
       let videoAnswered = 0;
       let videoPoints = 0;
@@ -230,7 +232,7 @@ const AdminDashboard = () => {
       for (const [quizKey, quizData] of Object.entries(quizzes)) {
         totalAnswered++;
         videoAnswered++;
-        
+
         if (quizData.correct) {
           correctAnswers++;
           videoCorrect++;
@@ -263,7 +265,7 @@ const AdminDashboard = () => {
       const score = levelScores?.[level.number] || levelScores?.[`level${level.number}`] || null;
       const isCompleted = completedLevels?.includes(level.number);
       const isPassed = score !== null && score >= 80;
-      
+
       if (score !== null) {
         stats.totalScore += score;
         if (isPassed) {
@@ -295,6 +297,40 @@ const AdminDashboard = () => {
   const closeModal = () => {
     setShowModal(false);
     setSelectedUser(null);
+  };
+
+  // ฟังก์ชันลบผู้ใช้งาน
+  const handleDeleteUser = async (userId, username) => {
+    if (username === 'Phakapon') {
+      alert('ไม่สามารถลบผู้ดูแลระบบตัวหลักได้');
+      return;
+    }
+
+    const isConfirmed = window.confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้ "${username}" อย่างถาวร?\n\nคำเตือน: ข้อมูลทั้งหมดรวมถึงคะแนนและประวัติความคืบหน้าจะถูกลบและไม่สามารถกู้คืนได้ และเขาจะสามารถสมัครใหม่ด้วยชื่อผู้ใช้นี้ได้`);
+
+    if (!isConfirmed) return;
+
+    try {
+      // อ้างอิงถึงข้อมูลผู้ใช้ในโหนดต่างๆ ของ database
+      const userRef = ref(database, `users/${userId}`);
+      const userPostTestRef = ref(database, `${username}`);
+
+      // ลบข้อมูลออกให้หมด
+      await remove(userRef);
+      await remove(userPostTestRef);
+
+      // อัปเดต state ให้ออกจากตารางโชว์
+      setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+      alert('ลบผู้ใช้และข้อมูลที่เกี่ยวข้องเรียบร้อยแล้ว');
+
+      // ถ้าลบคนที่กำลังเปิด Modal ดูอยู่ ให้ปิด Modal ด้วย
+      if (selectedUser?.id === userId) {
+        closeModal();
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('เกิดข้อผิดพลาดในการลบผู้ใช้: ' + error.message);
+    }
   };
 
   const stats = getStatistics();
@@ -374,8 +410,8 @@ const AdminDashboard = () => {
           />
         </div>
         <div className="adm-filters">
-          <select 
-            value={filterLevel} 
+          <select
+            value={filterLevel}
             onChange={(e) => setFilterLevel(e.target.value)}
             className="adm-select"
           >
@@ -386,8 +422,8 @@ const AdminDashboard = () => {
             <option value="9">ผ่าน JS (ด่าน 9)</option>
             <option value="12">ผ่านครบทุกด่าน</option>
           </select>
-          <select 
-            value={sortBy} 
+          <select
+            value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             className="adm-select"
           >
@@ -416,6 +452,7 @@ const AdminDashboard = () => {
               <th>สถานะ</th>
               <th>วันที่สมัคร</th>
               <th>รายละเอียด</th>
+              <th>จัดการ</th>
             </tr>
           </thead>
           <tbody>
@@ -426,7 +463,7 @@ const AdminDashboard = () => {
                 const achievementCount = getAchievementCount(user.gameProgress?.achievements);
                 const postTest = user.postTestScore;
                 const hasPostTest = postTest !== null;
-                
+
                 return (
                   <tr key={user.id} className={user.username === 'Phakapon' ? 'adm-row-highlight' : ''}>
                     <td className="adm-center">{index + 1}</td>
@@ -445,7 +482,7 @@ const AdminDashboard = () => {
                     <td className="adm-center">
                       <div className="adm-progress-cell">
                         <div className="adm-progress-bar">
-                          <div 
+                          <div
                             className="adm-progress-fill"
                             style={{ width: `${(completedCount / 12) * 100}%` }}
                           ></div>
@@ -454,7 +491,7 @@ const AdminDashboard = () => {
                       </div>
                     </td>
                     <td>
-                      <span 
+                      <span
                         className="adm-level-pill"
                         style={{ backgroundColor: progress.color }}
                       >
@@ -468,7 +505,7 @@ const AdminDashboard = () => {
                       {hasPostTest ? (
                         <div className="adm-posttest-cell">
                           <span className="adm-score-pill">{postTest.score}/{postTest.totalQuestions}</span>
-                          <span 
+                          <span
                             className="adm-percent-pill"
                             style={{ backgroundColor: postTest.passed ? '#22c55e' : '#ef4444' }}
                           >
@@ -496,12 +533,22 @@ const AdminDashboard = () => {
                         ดูเพิ่มเติม
                       </button>
                     </td>
+                    <td className="adm-center">
+                      {user.username !== 'Phakapon' && (
+                        <button
+                          className="adm-delete-btn"
+                          onClick={(e) => { e.stopPropagation(); handleDeleteUser(user.id, user.username); }}
+                        >
+                          ลบผู้ใช้
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="11" className="adm-no-data">ไม่พบข้อมูลผู้ใช้</td>
+                <td colSpan="12" className="adm-no-data">ไม่พบข้อมูลผู้ใช้</td>
               </tr>
             )}
           </tbody>
@@ -513,7 +560,7 @@ const AdminDashboard = () => {
         <div className="adm-modal-overlay" onClick={closeModal}>
           <div className="adm-modal" onClick={(e) => e.stopPropagation()}>
             <button className="adm-modal-close" onClick={closeModal}>×</button>
-            
+
             {/* Modal Header */}
             <div className="adm-modal-head">
               <div className="adm-modal-avatar">
@@ -550,10 +597,10 @@ const AdminDashboard = () => {
             {/* Level Scores Section - ส่วนใหม่ที่เพิ่ม */}
             {(() => {
               const levelStats = getLevelScoreStats(
-                selectedUser.gameProgress?.levelScores, 
+                selectedUser.gameProgress?.levelScores,
                 selectedUser.gameProgress?.completedLevels
               );
-              
+
               // จัดกลุ่มด่านตาม category
               const categories = [
                 { name: 'HTML', color: '#3b82f6', levels: levelStats.levels.slice(0, 3) },
@@ -565,7 +612,7 @@ const AdminDashboard = () => {
               return (
                 <div className="adm-modal-section">
                   <h3>📊 คะแนนแต่ละด่าน</h3>
-                  
+
                   {/* สรุปรวมคะแนนด่าน */}
                   <div className="adm-level-score-summary">
                     <div className="adm-level-score-stat passed">
@@ -590,7 +637,7 @@ const AdminDashboard = () => {
                     {categories.map((category) => {
                       const categoryTotalScore = category.levels.reduce((sum, l) => sum + (l.score || 0), 0);
                       const categoryAttempted = category.levels.filter(l => l.score !== null).length;
-                      
+
                       return (
                         <div key={category.name} className="adm-level-category">
                           <div className="adm-level-category-header" style={{ backgroundColor: category.color }}>
@@ -601,8 +648,8 @@ const AdminDashboard = () => {
                           </div>
                           <div className="adm-level-category-items">
                             {category.levels.map((level) => (
-                              <div 
-                                key={level.number} 
+                              <div
+                                key={level.number}
                                 className={`adm-level-score-item ${level.status}`}
                               >
                                 <div className="adm-level-score-info">
@@ -616,16 +663,16 @@ const AdminDashboard = () => {
                                 <div className="adm-level-score-value">
                                   {level.score !== null ? (
                                     <>
-                                      <span 
+                                      <span
                                         className="adm-level-score-number"
-                                        style={{ 
+                                        style={{
                                           color: level.isPassed ? '#22c55e' : '#ef4444'
                                         }}
                                       >
                                         {level.score}
                                       </span>
                                       <span className="adm-level-score-max">/100</span>
-                                      <span 
+                                      <span
                                         className={`adm-level-score-badge ${level.isPassed ? 'passed' : 'failed'}`}
                                       >
                                         {level.isPassed ? '✓' : '✗'}
@@ -666,8 +713,8 @@ const AdminDashboard = () => {
                         </div>
                         <div className="adm-video-stat">
                           <span className="adm-video-stat-val">
-                            {videoStats.totalAnswered > 0 
-                              ? Math.round((videoStats.correctAnswers / videoStats.totalAnswered) * 100) 
+                            {videoStats.totalAnswered > 0
+                              ? Math.round((videoStats.correctAnswers / videoStats.totalAnswered) * 100)
                               : 0}%
                           </span>
                           <span className="adm-video-stat-lbl">ความถูกต้อง</span>
@@ -730,10 +777,10 @@ const AdminDashboard = () => {
                   const isCompleted = selectedUser.gameProgress?.completedLevels?.includes(level);
                   const score = selectedUser.gameProgress?.levelScores?.[level] || selectedUser.gameProgress?.levelScores?.[`level${level}`];
                   const categoryColor = level <= 3 ? '#3b82f6' : level <= 6 ? '#22c55e' : level <= 9 ? '#f59e0b' : '#8b5cf6';
-                  
+
                   return (
-                    <div 
-                      key={level} 
+                    <div
+                      key={level}
                       className={`adm-level-box ${isCompleted ? 'adm-level-done' : 'adm-level-lock'}`}
                       style={{ borderColor: isCompleted ? categoryColor : '#e5e7eb' }}
                     >
@@ -753,10 +800,10 @@ const AdminDashboard = () => {
               <div className="adm-ach-list">
                 {achievementList.map((achievement) => {
                   const isUnlocked = selectedUser.gameProgress?.achievements?.[achievement.id]?.claimed;
-                  
+
                   return (
-                    <div 
-                      key={achievement.id} 
+                    <div
+                      key={achievement.id}
                       className={`adm-ach-item ${isUnlocked ? 'adm-ach-unlocked' : 'adm-ach-locked'}`}
                       style={{ borderColor: isUnlocked ? achievement.color : '#e5e7eb' }}
                     >

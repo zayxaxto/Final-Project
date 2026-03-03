@@ -24,11 +24,35 @@ const Stage12 = () => {
 
   // คำถาม Bootstrap Short Answer (ใช้ข้อสอบชั่วคราว - เปลี่ยนทีหลังได้)
   const questions = [
-    { question: "Class ใดใช้สำหรับสร้าง row ใน Bootstrap Grid", correctAnswers: ["row", "ROW", "Row"], hint: "คำภาษาอังกฤษที่แปลว่า 'แถว'" },
-    { question: "Class ใดใช้สำหรับสร้างคอลัมน์ที่ปรับขนาดอัตโนมัติ", correctAnswers: ["col", "COL", "Col"], hint: "ย่อมาจาก column" },
-    { question: "Class ใดใช้สำหรับเพิ่ม margin ทุกด้าน", correctAnswers: ["m-", "m", "M"], hint: "ย่อมาจาก margin (ตามด้วยตัวเลข)" },
-    { question: "Class ใดใช้สำหรับเพิ่ม padding ทุกด้าน", correctAnswers: ["p-", "p", "P"], hint: "ย่อมาจาก padding (ตามด้วยตัวเลข)" },
-    { question: "Bootstrap Grid แบ่งหน้าจอออกเป็นกี่คอลัมน์", correctAnswers: ["12", "12คอลัมน์", "สิบสอง"], hint: "ตัวเลข" }
+    {
+      question: "Bootstrap รองรับการออกแบบเว็บไซต์ตามแนวคิดใด",
+      correctAnswers: ["Responsive Web Design", "responsive web design", "Responsive"],
+      hint: "แนวคิดที่ทำให้เว็บแสดงผลได้หลายอุปกรณ์"
+    },
+
+    {
+      question: "Class ใดใช้สร้างปุ่มสีหลักของ Bootstrap",
+      correctAnswers: ["btn-primary", "BTN-PRIMARY", "Btn-primary"],
+      hint: "btn ตามด้วยคำว่า primary"
+    },
+
+    {
+      question: "Class ใดใช้กำหนดข้อความสีเขียว",
+      correctAnswers: ["text-success", "TEXT-SUCCESS", "Text-success"],
+      hint: "text ตามด้วย success"
+    },
+
+    {
+      question: "Class โครงสร้างหลักของ Card คืออะไร",
+      correctAnswers: ["card", "CARD", "Card"],
+      hint: "เป็นคลาสกล่องหลักของ Card"
+    },
+
+    {
+      question: "Class ใดใช้กำหนดพื้นหลังสีอันตราย",
+      correctAnswers: ["bg-danger", "BG-DANGER", "Bg-danger"],
+      hint: "bg ตามด้วย danger"
+    }
   ];
 
   useEffect(() => {
@@ -177,14 +201,18 @@ const Stage12 = () => {
                 <div style={{ background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)', color: 'white', padding: '20px 30px', borderRadius: '15px', marginBottom: '25px', fontSize: '1.3em', fontWeight: 'bold' }}>❌ ต้องได้ {MIN_PASSING_SCORE}/100 ขึ้นไป</div>
               </>
             )}
-            <div style={{ fontSize: '2em', marginBottom: '15px' }}>คะแนน: {finalScore}/100</div>
-            <div style={{ fontSize: '1.3em', color: '#555', marginBottom: '25px', padding: '15px', background: '#f5f5f5', borderRadius: '10px' }}>
+            <div className="stage-final-score-text" style={{ fontSize: "2em", marginBottom: "15px" }}>คะแนน: {finalScore}/100</div>
+            <div className="stage-correct-review-text" style={{ fontSize: "1.3em", marginBottom: "25px", padding: "15px", borderRadius: "10px" }}>
               ตอบถูก <strong style={{ color: isPassed ? '#4caf50' : '#f44336' }}>{correctAnswers}</strong> จาก {questions.length} ข้อ
               {finalScore === 100 && <div style={{ color: '#4caf50', fontWeight: 'bold', marginTop: '15px' }}>🏆 คะแนนเต็ม! Perfect!</div>}
             </div>
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="stage3-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}> {isPassed ? 'Play Again' : 'Play Again'}</button>
-              <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>Return to the stage selection page</button>
+            <div className="stage-action-buttons">
+              <button className="stage-btn stage-btn-primary" onClick={resetGame}>
+                ↻ {isPassed ? 'Play Again' : 'Try Again'}
+              </button>
+              <button className="stage-btn stage-btn-secondary" onClick={() => navigate('/')}>
+                🏠 Return to Stages
+              </button>
             </div>
           </div>
         )}

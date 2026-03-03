@@ -107,7 +107,7 @@ body {
 
 /* Video Container */
 .video-container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);

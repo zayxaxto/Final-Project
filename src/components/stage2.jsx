@@ -171,13 +171,17 @@ const Stage2 = () => {
                 <div style={{ background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)', color: 'white', padding: '20px 30px', borderRadius: '15px', marginBottom: '25px', fontSize: '1.3em', fontWeight: 'bold' }}>❌ ต้องได้ {MIN_PASSING_SCORE}/100 ขึ้นไป</div>
               </>
             )}
-            <div style={{ fontSize: '2em', marginBottom: '15px' }}>คะแนน: {finalScore}/100</div>
-            <div style={{ fontSize: '1.3em', color: '#555', marginBottom: '25px', padding: '15px', background: '#f5f5f5', borderRadius: '10px' }}>
+            <div className="stage-final-score-text" style={{ fontSize: "2em", marginBottom: "15px" }}>คะแนน: {finalScore}/100</div>
+            <div className="stage-correct-review-text" style={{ fontSize: "1.3em", marginBottom: "25px", padding: "15px", borderRadius: "10px" }}>
               ตอบถูก <strong style={{ color: isPassed ? '#4caf50' : '#f44336' }}>{correctAnswers}</strong> จาก {questions.length} ข้อ
             </div>
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="stage2-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}> {isPassed ? 'Play again' : 'Play Again'}</button>
-              <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>Return to the stage selection page</button>
+            <div className="stage-action-buttons">
+              <button className="stage-btn stage-btn-primary" onClick={resetGame}>
+                ↻ {isPassed ? 'Play Again' : 'Try Again'}
+              </button>
+              <button className="stage-btn stage-btn-secondary" onClick={() => navigate('/')}>
+                🏠 Return to Stages
+              </button>
             </div>
           </div>
         )}

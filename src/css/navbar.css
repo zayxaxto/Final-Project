@@ -876,3 +876,136 @@ body.dark-mode .result-card::before,
 body.dark-mode .result-card::after {
   opacity: 0.1;
 }
+
+/* ==================== STAGES ACTION BUTTONS ==================== */
+.stage-action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.stage-btn {
+  padding: 15px 30px;
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: 'Kanit', sans-serif;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stage-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stage-btn-primary {
+  background: linear-gradient(135deg, #42a5f5, #2196f3);
+  color: white;
+}
+
+.stage-btn-primary:hover {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+}
+
+.stage-btn-secondary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.stage-btn-secondary:hover {
+  background: linear-gradient(135deg, #5a6edb, #6b4494);
+}
+
+/* ================= STAGE TEXT DARK MODE FIX ==================== */
+body.dark-mode .stage1-completion-message,
+body.dark-mode .stage2-completion-message,
+body.dark-mode .stage3-completion-message,
+body.dark-mode .stage1-quiz-header,
+body.dark-mode .stage2-quiz-header,
+body.dark-mode .stage3-quiz-header,
+body.dark-mode .stage1-question-container,
+body.dark-mode .stage2-question-container,
+body.dark-mode .stage3-question-container {
+  background-color: var(--surface-color) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .stage1-completion-message>div,
+body.dark-mode .stage2-completion-message>div,
+body.dark-mode .stage3-completion-message>div,
+body.dark-mode .stage1-quiz-title,
+body.dark-mode .stage2-quiz-title,
+body.dark-mode .stage3-quiz-title {
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .stage1-question-text,
+body.dark-mode .stage2-question-text,
+body.dark-mode .stage3-question-text {
+  color: var(--text-main) !important;
+  background-color: var(--surface-color) !important;
+  border: 1px solid var(--border-color) !important;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .stage3-input-hint {
+  background-color: var(--surface-color) !important;
+  color: #60a5fa !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .stage3-answer-input {
+  background-color: var(--bg-color) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .stage3-answer-input:focus {
+  background-color: var(--surface-color) !important;
+  border-color: #3b82f6 !important;
+}
+
+body.dark-mode .stage3-answer-input:disabled {
+  background-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .stage-final-score-text {
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .stage-correct-review-text {
+  background-color: var(--bg-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .stage1-info-item,
+body.dark-mode .stage2-info-item,
+body.dark-mode .stage3-info-item {
+  background-color: var(--surface-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+body.dark-mode .stage1-info-value,
+body.dark-mode .stage2-info-value,
+body.dark-mode .stage3-info-value {
+  color: var(--text-main) !important;
+}
+
+body.dark-mode .stage1-info-label,
+body.dark-mode .stage2-info-label,
+body.dark-mode .stage3-info-label {
+  color: var(--text-light) !important;
+}

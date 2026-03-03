@@ -24,11 +24,60 @@ const Stage10 = () => {
 
   // คำถาม Bootstrap (ใช้ข้อสอบชั่วคราว - เปลี่ยนทีหลังได้)
   const questions = [
-    { question: "Bootstrap Grid System แบ่งหน้าจอออกเป็นกี่คอลัมน์", options: ["6", "10", "12", "16"], correct: 2 },
-    { question: "Class ใดใช้สำหรับสร้างปุ่มสีน้ำเงินใน Bootstrap", options: ["btn-blue", "btn-primary", "btn-main", "btn-default"], correct: 1 },
-    { question: "Class ใดใช้สำหรับสร้าง Container แบบเต็มความกว้าง", options: ["container", "container-fluid", "container-full", "container-wide"], correct: 1 },
-    { question: "Breakpoint ใดใช้สำหรับหน้าจอขนาดเล็ก (Small)", options: ["xs", "sm", "md", "lg"], correct: 1 },
-    { question: "Class ใดใช้สำหรับซ่อน element บนหน้าจอขนาดเล็ก", options: ["d-none", "d-sm-none", "hidden-sm", "invisible"], correct: 0 }
+    {
+      question: "Bootstrap คืออะไร",
+      options: [
+        "Framework สำหรับพัฒนาเว็บไซต์",
+        "ภาษาเขียนโปรแกรม",
+        "ระบบจัดการฐานข้อมูล",
+        "โปรแกรมออกแบบกราฟิก"
+      ],
+      correct: 0
+    },
+
+    {
+      question: "Container มีหน้าที่ใด",
+      options: [
+        "กำหนดสีพื้นหลัง",
+        "สร้างปุ่ม",
+        "เป็นกรอบจัดวางเนื้อหา",
+        "แสดงข้อความเตือน"
+      ],
+      correct: 2
+    },
+
+    {
+      question: "คลาสใดใช้กำหนดแถวใน Grid System",
+      options: [
+        ".row",
+        ".col",
+        ".container",
+        ".grid"
+      ],
+      correct: 0
+    },
+
+    {
+      question: "คลาสพื้นฐานของ Alert คือข้อใด",
+      options: [
+        ".notify",
+        ".alert-box",
+        ".message",
+        ".alert"
+      ],
+      correct: 3
+    },
+
+    {
+      question: "Bootstrap รองรับเว็บไซต์แบบใด",
+      options: [
+        "Static",
+        "Responsive",
+        "Fixed",
+        "Inline"
+      ],
+      correct: 1
+    }
   ];
 
   useEffect(() => {
@@ -200,17 +249,17 @@ const Stage10 = () => {
                 </div>
               </>
             )}
-            <div style={{ fontSize: '2em', marginBottom: '15px' }}>คะแนน Quiz: {finalScore}/100</div>
-            <div style={{ fontSize: '1.3em', color: '#555', marginBottom: '25px', padding: '15px', background: '#f5f5f5', borderRadius: '10px' }}>
+            <div className="stage-final-score-text" style={{ fontSize: "2em", marginBottom: "15px" }}>คะแนน Quiz: {finalScore}/100</div>
+            <div className="stage-correct-review-text" style={{ fontSize: "1.3em", marginBottom: "25px", padding: "15px", borderRadius: "10px" }}>
               ตอบถูก <strong style={{ color: isPassed ? '#4caf50' : '#f44336' }}>{correctAnswers}</strong> จาก {questions.length} ข้อ
               {finalScore === 100 && <div style={{ color: '#4caf50', fontWeight: 'bold', marginTop: '15px' }}>🏆 คะแนนเต็ม!</div>}
             </div>
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="stage1-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}>
-                {isPassed ? 'Play Again' : 'Play Again'}
+            <div className="stage-action-buttons">
+              <button className="stage-btn stage-btn-primary" onClick={resetGame}>
+                ↻ {isPassed ? 'Play Again' : 'Try Again'}
               </button>
-              <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>
-                Return to the stage selection page
+              <button className="stage-btn stage-btn-secondary" onClick={() => navigate('/')}>
+                🏠 Return to Stages
               </button>
             </div>
           </div>

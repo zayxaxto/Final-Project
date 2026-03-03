@@ -24,11 +24,31 @@ const Stage9 = () => {
 
   // คำถาม JavaScript Short Answer (ใช้ข้อสอบชั่วคราว - เปลี่ยนทีหลังได้)
   const questions = [
-    { question: "คำสั่งใดใช้สำหรับประกาศตัวแปรที่เปลี่ยนค่าไม่ได้", correctAnswers: ["const", "CONST", "Const"], hint: "ย่อมาจาก constant" },
-    { question: "Method ใดใช้สำหรับหาความยาวของ Array", correctAnswers: ["length", "LENGTH", "Length", ".length"], hint: "ไม่ใช่ method แต่เป็น property" },
-    { question: "คำสั่งใดใช้สำหรับแสดง popup แจ้งเตือน", correctAnswers: ["alert", "alert()", "ALERT", "Alert"], hint: "แสดงกล่องข้อความบนหน้าเว็บ" },
-    { question: "ชนิดข้อมูลใดใช้เก็บค่า true หรือ false", correctAnswers: ["boolean", "Boolean", "BOOLEAN", "bool"], hint: "ค่าความจริง" },
-    { question: "Method ใดใช้แปลง String เป็นตัวเลข", correctAnswers: ["parseInt", "parseint", "parseInt()", "ParseInt", "Number"], hint: "แปลงข้อความเป็นจำนวนเต็ม" }
+    {
+      question: "คำสั่งใดใช้สำหรับประกาศตัวแปรที่สามารถเปลี่ยนค่าได้ และมี block scope",
+      correctAnswers: ["let", "LET", "Let"],
+      hint: "ใช้แทน var ใน JavaScript สมัยใหม่"
+    },
+    {
+      question: "ตัวดำเนินการใดใช้เปรียบเทียบค่าโดยไม่ตรวจสอบชนิดข้อมูล",
+      correctAnswers: ["=="],
+      hint: "เรียกว่า Loose Equality"
+    },
+    {
+      question: "คำสั่งใดใช้สำหรับวนลูปเมื่อทราบจำนวนรอบที่แน่นอน",
+      correctAnswers: ["for", "FOR", "For"],
+      hint: "นิยมใช้เมื่อรู้จำนวนรอบชัดเจน"
+    },
+    {
+      question: "คำสั่งใดใช้คืนค่าจากฟังก์ชัน",
+      correctAnswers: ["return", "RETURN", "Return"],
+      hint: "ใช้ส่งค่ากลับไปยังจุดที่เรียกฟังก์ชัน"
+    },
+    {
+      question: "Property ใดใช้เปลี่ยนข้อความภายใน element ผ่าน DOM",
+      correctAnswers: ["innerHTML", "innerHtml", "INNERHTML"],
+      hint: "ใช้แก้ไขเนื้อหาภายในแท็ก"
+    }
   ];
 
   useEffect(() => {
@@ -175,13 +195,17 @@ const Stage9 = () => {
                 <div style={{ background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)', color: 'white', padding: '20px 30px', borderRadius: '15px', marginBottom: '25px', fontSize: '1.3em', fontWeight: 'bold' }}>❌ ต้องได้ {MIN_PASSING_SCORE}/100 ขึ้นไป</div>
               </>
             )}
-            <div style={{ fontSize: '2em', marginBottom: '15px' }}>คะแนน: {finalScore}/100</div>
-            <div style={{ fontSize: '1.3em', color: '#555', marginBottom: '25px', padding: '15px', background: '#f5f5f5', borderRadius: '10px' }}>
+            <div className="stage-final-score-text" style={{ fontSize: "2em", marginBottom: "15px" }}>คะแนน: {finalScore}/100</div>
+            <div className="stage-correct-review-text" style={{ fontSize: "1.3em", marginBottom: "25px", padding: "15px", borderRadius: "10px" }}>
               ตอบถูก <strong style={{ color: isPassed ? '#4caf50' : '#f44336' }}>{correctAnswers}</strong> จาก {questions.length} ข้อ
             </div>
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="stage3-play-again-button" onClick={resetGame} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold' }}> {isPassed ? 'Play Again' : 'Play Again'}</button>
-              <button onClick={() => navigate('/')} style={{ padding: '15px 30px', fontSize: '1.1em', fontWeight: 'bold', background: '#667eea', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>Return to the stage selection page</button>
+            <div className="stage-action-buttons">
+              <button className="stage-btn stage-btn-primary" onClick={resetGame}>
+                ↻ {isPassed ? 'Play Again' : 'Try Again'}
+              </button>
+              <button className="stage-btn stage-btn-secondary" onClick={() => navigate('/')}>
+                🏠 Return to Stages
+              </button>
             </div>
           </div>
         )}

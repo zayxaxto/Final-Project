@@ -87,11 +87,21 @@ const VideoQuizPlayer = () => {
   // ตรวจสอบเวลาและแสดงคำถาม
   const handleProgress = (state) => {
     const playedSeconds = state.playedSeconds;
-    setCurrentTime(Math.floor(playedSeconds));
 
+    // ป้องกันการกรอวิดีโอไปข้างหน้า (ถ้าข้ามไปเกิน 2 วินาที)
+    if (playedSeconds > maxWatchedTime + 2) {
+      if (playerRef.current) {
+        playerRef.current.seekTo(maxWatchedTime, 'seconds');
+      }
+      return;
+    }
+
+    // อัพเดทเวลาสูงสุดที่ดูแล้ว
     if (playedSeconds > maxWatchedTime) {
       setMaxWatchedTime(playedSeconds);
     }
+
+    setCurrentTime(Math.floor(playedSeconds));
 
     quizData.forEach(quiz => {
       const currentSecond = Math.floor(playedSeconds);
@@ -252,7 +262,7 @@ const VideoQuizPlayer = () => {
     <div className="app-container">
       {/* Header */}
       <div className="header">
-        <h1>🎬 Interactive Video Learning</h1>
+        <h1>🎬 Episode 1 : HTML</h1>
         <p>วิดีโอพร้อมแบบทดสอบระหว่างเรียน</p>
       </div>
 
@@ -263,9 +273,9 @@ const VideoQuizPlayer = () => {
             ref={playerRef}
             url={YOUTUBE_URL}
             playing={playing}
-            controls={true}
+            controls={false}
             width="100%"
-            height="400px"
+            height="600px"
             onProgress={handleProgress}
             onSeek={handleSeek}
             onPlay={() => setPlaying(true)}
@@ -275,7 +285,9 @@ const VideoQuizPlayer = () => {
                 playerVars: {
                   modestbranding: 1,
                   rel: 0,
-                  showinfo: 0
+                  showinfo: 0,
+                  disablekb: 1,
+                  controls: 0
                 }
               }
             }}
