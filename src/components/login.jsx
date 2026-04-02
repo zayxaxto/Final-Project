@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import '../css/auth.css';
 import kmutnbLogo from '../img/kmutnb.png';
 import cedLogo from '../img/ced.png';
+import raffyImg from '../img/Raffy.png';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -72,9 +73,12 @@ const Login = () => {
     <div className="auth-container">
       <div className="auth-left login-left">
         <h1 className="auth-brand">CodeRaffy</h1>
-        <div className="brand-logos">
-          <img src={kmutnbLogo} alt="KMUTNB" className="brand-logo" />
-          <img src={cedLogo} alt="CED" className="brand-logo" />
+        <div className="brand-logos-wrapper">
+          <div className="brand-logos">
+            <img src={kmutnbLogo} alt="KMUTNB" className="brand-logo" />
+            <img src={cedLogo} alt="CED" className="brand-logo" />
+          </div>
+          <img src={raffyImg} alt="CodeRaffy Mascot" className="mascot-outside" />
         </div>
       </div>
       <div className="auth-right">

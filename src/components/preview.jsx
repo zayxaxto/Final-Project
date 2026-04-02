@@ -236,7 +236,7 @@ const LiveHtmlEditor = () => {
                 style={{ width: "100%", minHeight: 400, border: 'none', borderRadius: 12, background: "#fff", transition: 'box-shadow 0.2s' }}
               />
             ) : ran && (
-              <div style={{ color: blueDark, fontStyle: 'italic', background: '#fff', border: `1.5px solid ${blue}`, borderRadius: 8, padding: 24, fontWeight: 600, boxShadow: '0 1px 8px #2196f322' }}>Preview not available due to HTML structure errors.</div>
+              <div style={{ color: blueDark, fontStyle: 'italic', background: '#fff', border: `1.5px solid ${blue}`, borderRadius: 8, padding: 24, fontWeight: 600, boxShadow: '0 1px 8px #2196f322' }}>ไม่สามารถแสดงผลได้ เนื่องจากโครงสร้าง HTML มีข้อผิดพลาด</div>
             )}
           </div>
         </div>
