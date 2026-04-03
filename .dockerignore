@@ -1,0 +1,10 @@
+node_modules
+build
+.git
+.gitignore
+.firebase
+.DS_Store
+Dockerfile
+.dockerignore
+package-lock.json
+*.md
