@@ -283,7 +283,7 @@ function AppContent() {
 function App() {
     return (
         <AuthProvider>
-            <Router>
+            <Router basename="/coderaffy">
                 <AppContent />
             </Router>
         </AuthProvider>

@@ -1,4 +1,4 @@
-# Stage 1: Build 
+# Stage 1: Build the React application
 FROM node:18-alpine AS build
 
 WORKDIR /app
@@ -7,19 +7,14 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve 
-FROM node:18-alpine
+# Stage 2: Serve with Caddy
+FROM caddy:2-alpine
 
-WORKDIR /app
+# Copy the built dynamic static files from stage 1 over to Caddy's default folder
+COPY --from=build /app/build /srv/coderaffy
 
-# Install 'serve', a basic Node.js static file server
-RUN npm install -g serve
+# Copy our custom configuration file for routing
+COPY Caddyfile /etc/caddy/Caddyfile
 
-# Copy only the compiled build files
-COPY --from=build /app/build ./build
-
-# Expose port 3000
-EXPOSE 3000
-
-# Serve the application over HTTP (University server will forward HTTPS to this port)
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Explicitly expose port 80
+EXPOSE 80

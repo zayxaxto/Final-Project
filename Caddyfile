@@ -1,0 +1,10 @@
+:80 {
+	# Set the root to the location where the built static files will be placed
+	root * /srv
+
+	# Enable the static file server
+	file_server
+
+	# Redirect all unknown routes to index.html (necessary for React Router/SPA)
+	try_files {path} /coderaffy/index.html
+}
