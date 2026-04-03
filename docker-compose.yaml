@@ -1,6 +1,7 @@
 services:
   frontend:
-    image: final-project-test
+    build:
+      context: .
     container_name: final-project-app
     restart: always
     ports:
