@@ -281,9 +281,13 @@ function AppContent() {
 }
 
 function App() {
+    const routerBasename = window.location.pathname.startsWith("/coderaffy")
+        ? "/coderaffy"
+        : undefined;
+
     return (
         <AuthProvider>
-            <Router basename="/coderaffy">
+            <Router basename={routerBasename}>
                 <AppContent />
             </Router>
         </AuthProvider>
